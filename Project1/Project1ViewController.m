@@ -10,6 +10,9 @@
 
 @interface Project1ViewController ()
 
+- (IBAction)startButton:(id)sender;
+- (IBAction)howToPlay:(id)sender;
+
 @end
 
 @implementation Project1ViewController
@@ -26,4 +29,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // hide navigation bar 
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (IBAction)startButton:(id)sender {
+}
+
+- (IBAction)howToPlay:(id)sender {
+}
 @end
