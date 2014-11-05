@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.typeTest.text = self.chosenChar.charType;
     self.nameTest.text = self.chosenChar.charName;
     
