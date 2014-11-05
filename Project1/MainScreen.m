@@ -8,11 +8,13 @@
 
 #import "MainScreen.h"
 
+
 @interface MainScreen ()
 
 @property (weak, nonatomic) IBOutlet UILabel *nameDisplay;
 @property (weak, nonatomic) IBOutlet UILabel *typeDisplay;
 @property (weak, nonatomic) IBOutlet UIButton *statusButton;
+
 
 @end
 
@@ -33,11 +35,13 @@
 
 
 
-/*
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.nameDisplay.text = self.mainChar.charName;
+    self.nameDisplay.text = self.mainChar.charType;
 
     // Do any additional setup after loading the view.
 }
@@ -48,7 +52,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)gridStart
+{
+    
+}
 
+/*
 
 - (NSString *)documentsDirectory
 {

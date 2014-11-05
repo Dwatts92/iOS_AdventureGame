@@ -16,13 +16,12 @@
 - (IBAction)archer:(id)sender;
 - (IBAction)mage:(id)sender;
 
-@property NSObject * thisChar;
 
 - (IBAction)beginButton:(id)sender;
 
+@property LocalChar* character;
+
 @property (weak, nonatomic) IBOutlet UITextField *characterName;
-
-
 
 @end
 
@@ -43,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view.
     _characterName.delegate = self;
 }
@@ -63,37 +64,44 @@
     [_characterName resignFirstResponder];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)warrior:(id)sender {
     
     self.type = @"Warrior";
+   // self.character.charType = self.type;
 }
 
 - (IBAction)archer:(id)sender {
     
     self.type = @"Archer";
+   // self.character.charType = self.type;
 }
 
 - (IBAction)mage:(id)sender {
     
     self.type = @"Mage";
+   // self.character.charType = self.type;
 
 }
 
 - (IBAction)beginButton:(id)sender {
-
+    //self.character.charName = self.characterName.text;
+    self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
     
 }
+
+
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+     IntroStory *dest = segue.destinationViewController;
+     NSLog(@"Name: %@",self.character.charName);
+     NSLog(@"Type: %@",self.character.charType);
+     dest.chosenChar = self.character;
+ // Pass the selected object to the new view controller.
+ }
 
 
 

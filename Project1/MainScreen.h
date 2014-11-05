@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Character.h"
+#import "LocalChar.h"
+#import "IntroStory.h"
 
 @interface MainScreen : UIViewController
+
+@property LocalChar* mainChar;
+
+-(void)gridStart;
 
 @end

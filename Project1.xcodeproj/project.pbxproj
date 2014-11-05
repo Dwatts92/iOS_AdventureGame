@@ -43,6 +43,7 @@
 		1904E2641A083EFD002ABC66 /* Grid7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2531A083EFD002ABC66 /* Grid7.jpg */; };
 		1904E2651A083EFD002ABC66 /* Grid8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2541A083EFD002ABC66 /* Grid8.jpg */; };
 		1904E2661A083EFD002ABC66 /* Grid9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2551A083EFD002ABC66 /* Grid9.jpg */; };
+		1904E2691A084070002ABC66 /* LocalChar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2681A084070002ABC66 /* LocalChar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		1904E2531A083EFD002ABC66 /* Grid7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid7.jpg; sourceTree = "<group>"; };
 		1904E2541A083EFD002ABC66 /* Grid8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid8.jpg; sourceTree = "<group>"; };
 		1904E2551A083EFD002ABC66 /* Grid9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid9.jpg; sourceTree = "<group>"; };
+		1904E2671A084070002ABC66 /* LocalChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalChar.h; sourceTree = "<group>"; };
+		1904E2681A084070002ABC66 /* LocalChar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalChar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,10 @@
 		1904E1FD1A0798F1002ABC66 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
+				1904E2411A07BA58002ABC66 /* StatusTable.h */,
+				1904E2421A07BA58002ABC66 /* StatusTable.m */,
+				1904E2671A084070002ABC66 /* LocalChar.h */,
+				1904E2681A084070002ABC66 /* LocalChar.m */,
 				1904E2061A0798F1002ABC66 /* Project1AppDelegate.h */,
 				1904E2071A0798F1002ABC66 /* Project1AppDelegate.m */,
 				1904E2091A0798F1002ABC66 /* Main.storyboard */,
@@ -176,8 +183,6 @@
 				1904E20D1A0798F1002ABC66 /* Project1ViewController.m */,
 				1904E20F1A0798F1002ABC66 /* Images.xcassets */,
 				1904E1FE1A0798F1002ABC66 /* Supporting Files */,
-				1904E2411A07BA58002ABC66 /* StatusTable.h */,
-				1904E2421A07BA58002ABC66 /* StatusTable.m */,
 			);
 			path = Project1;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1904E2691A084070002ABC66 /* LocalChar.m in Sources */,
 				1904E2341A07B33C002ABC66 /* IntroStory.m in Sources */,
 				1904E2081A0798F1002ABC66 /* Project1AppDelegate.m in Sources */,
 				1904E2311A079FF9002ABC66 /* Character.m in Sources */,

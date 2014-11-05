@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Character.h"
+#import "LocalChar.h"
+#import "IntroStory.h"
 
 @interface ChooseClass : UIViewController <UITextFieldDelegate>
 
