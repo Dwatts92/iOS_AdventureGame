@@ -15,6 +15,6 @@
 
 @property LocalChar* mainChar;
 
--(void)gridStart;
+-(void)gridStart:(int)progress;
 
 @end

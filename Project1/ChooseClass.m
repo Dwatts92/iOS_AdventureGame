@@ -88,6 +88,8 @@
     //self.character.charName = self.characterName.text;
     self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
     
+    self.character.gridProgress = 0;
+    
 }
 
 
