@@ -25,7 +25,6 @@
 		1904E2311A079FF9002ABC66 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2301A079FF9002ABC66 /* Character.m */; };
 		1904E2341A07B33C002ABC66 /* IntroStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2331A07B33C002ABC66 /* IntroStory.m */; };
 		1904E2371A07B69F002ABC66 /* MainScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2361A07B69F002ABC66 /* MainScreen.m */; };
-		1904E2431A07BA58002ABC66 /* StatusTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2421A07BA58002ABC66 /* StatusTable.m */; };
 		1904E2561A083EFD002ABC66 /* Grid0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2451A083EFD002ABC66 /* Grid0.jpg */; };
 		1904E2571A083EFD002ABC66 /* Grid1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2461A083EFD002ABC66 /* Grid1.jpg */; };
 		1904E2581A083EFD002ABC66 /* Grid10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2471A083EFD002ABC66 /* Grid10.jpg */; };
@@ -44,6 +43,9 @@
 		1904E2651A083EFD002ABC66 /* Grid8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2541A083EFD002ABC66 /* Grid8.jpg */; };
 		1904E2661A083EFD002ABC66 /* Grid9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1904E2551A083EFD002ABC66 /* Grid9.jpg */; };
 		1904E2691A084070002ABC66 /* LocalChar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1904E2681A084070002ABC66 /* LocalChar.m */; };
+		196133861A0B37AA00664FC5 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 196133851A0B37AA00664FC5 /* Status.m */; };
+		196133891A0B3EE400664FC5 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 196133881A0B3EE400664FC5 /* Stats.m */; };
+		1961338C1A0B3F0200664FC5 /* Items.m in Sources */ = {isa = PBXBuildFile; fileRef = 1961338B1A0B3F0200664FC5 /* Items.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +86,6 @@
 		1904E2331A07B33C002ABC66 /* IntroStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroStory.m; sourceTree = "<group>"; };
 		1904E2351A07B69F002ABC66 /* MainScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScreen.h; sourceTree = "<group>"; };
 		1904E2361A07B69F002ABC66 /* MainScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScreen.m; sourceTree = "<group>"; };
-		1904E2411A07BA58002ABC66 /* StatusTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTable.h; sourceTree = "<group>"; };
-		1904E2421A07BA58002ABC66 /* StatusTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTable.m; sourceTree = "<group>"; };
 		1904E2451A083EFD002ABC66 /* Grid0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid0.jpg; sourceTree = "<group>"; };
 		1904E2461A083EFD002ABC66 /* Grid1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid1.jpg; sourceTree = "<group>"; };
 		1904E2471A083EFD002ABC66 /* Grid10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid10.jpg; sourceTree = "<group>"; };
@@ -105,6 +105,12 @@
 		1904E2551A083EFD002ABC66 /* Grid9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grid9.jpg; sourceTree = "<group>"; };
 		1904E2671A084070002ABC66 /* LocalChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalChar.h; sourceTree = "<group>"; };
 		1904E2681A084070002ABC66 /* LocalChar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalChar.m; sourceTree = "<group>"; };
+		196133841A0B37AA00664FC5 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
+		196133851A0B37AA00664FC5 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
+		196133871A0B3EE400664FC5 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
+		196133881A0B3EE400664FC5 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
+		1961338A1A0B3F0200664FC5 /* Items.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Items.h; sourceTree = "<group>"; };
+		1961338B1A0B3F0200664FC5 /* Items.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Items.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,16 +170,20 @@
 		1904E1FD1A0798F1002ABC66 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
-				1904E2411A07BA58002ABC66 /* StatusTable.h */,
-				1904E2421A07BA58002ABC66 /* StatusTable.m */,
 				1904E2671A084070002ABC66 /* LocalChar.h */,
 				1904E2681A084070002ABC66 /* LocalChar.m */,
 				1904E2061A0798F1002ABC66 /* Project1AppDelegate.h */,
 				1904E2071A0798F1002ABC66 /* Project1AppDelegate.m */,
 				1904E2091A0798F1002ABC66 /* Main.storyboard */,
+				196133871A0B3EE400664FC5 /* Stats.h */,
+				196133881A0B3EE400664FC5 /* Stats.m */,
+				1961338A1A0B3F0200664FC5 /* Items.h */,
+				1961338B1A0B3F0200664FC5 /* Items.m */,
 				1904E2351A07B69F002ABC66 /* MainScreen.h */,
 				1904E2361A07B69F002ABC66 /* MainScreen.m */,
 				1904E2321A07B33C002ABC66 /* IntroStory.h */,
+				196133841A0B37AA00664FC5 /* Status.h */,
+				196133851A0B37AA00664FC5 /* Status.m */,
 				1904E2331A07B33C002ABC66 /* IntroStory.m */,
 				1904E22F1A079FF9002ABC66 /* Character.h */,
 				1904E2301A079FF9002ABC66 /* Character.m */,
@@ -356,14 +366,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1961338C1A0B3F0200664FC5 /* Items.m in Sources */,
 				1904E2691A084070002ABC66 /* LocalChar.m in Sources */,
 				1904E2341A07B33C002ABC66 /* IntroStory.m in Sources */,
 				1904E2081A0798F1002ABC66 /* Project1AppDelegate.m in Sources */,
 				1904E2311A079FF9002ABC66 /* Character.m in Sources */,
 				1904E2041A0798F1002ABC66 /* main.m in Sources */,
-				1904E2431A07BA58002ABC66 /* StatusTable.m in Sources */,
+				196133891A0B3EE400664FC5 /* Stats.m in Sources */,
 				1904E20E1A0798F1002ABC66 /* Project1ViewController.m in Sources */,
 				1904E22E1A079D66002ABC66 /* ChooseClass.m in Sources */,
+				196133861A0B37AA00664FC5 /* Status.m in Sources */,
 				1904E2371A07B69F002ABC66 /* MainScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

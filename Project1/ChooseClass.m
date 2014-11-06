@@ -19,13 +19,14 @@
 
 - (IBAction)beginButton:(id)sender;
 
+
 @property LocalChar* character;
 
 @property (weak, nonatomic) IBOutlet UITextField *characterName;
 
 @end
 
-
+//@synthesize beginButton = _beginButton;
 @implementation ChooseClass
 
 @synthesize characterName = _characterName;
@@ -42,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     
     // Do any additional setup after loading the view.
@@ -84,8 +86,18 @@
 
 }
 
+
+
 - (IBAction)beginButton:(id)sender {
     //self.character.charName = self.characterName.text;
+    if ([self.characterName.text  isEqual: @""])
+    {
+        self.characterName.text = @"Blank";
+        if (self.type == NULL)
+        {
+            self.type = @"Warrior";
+        }
+    }
     self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
     
     self.character.gridProgress = 0;

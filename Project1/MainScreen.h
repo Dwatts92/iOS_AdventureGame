@@ -10,11 +10,10 @@
 #import "Character.h"
 #import "LocalChar.h"
 #import "IntroStory.h"
+#import "Status.h"
 
 @interface MainScreen : UIViewController
 
 @property LocalChar* mainChar;
-
--(void)gridStart:(int)progress;
 
 @end

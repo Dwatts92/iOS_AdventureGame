@@ -33,7 +33,6 @@
 @property int enemy1_health;
 @property int enemy2_health;
 @property int enemy3_health;
-@property int enemy4_health;
 @property int tempHealth;
 
 @property (weak, nonatomic) IBOutlet UITextView *mainText;
@@ -58,13 +57,11 @@
 {
     [super viewDidLoad];
     
-    self.enemy1_health = 30;
-    self.enemy2_health = 40;
-    self.enemy3_health = 50;
-    self.enemy4_health = 60;
     
-    self.mainChar.health = 300;
-    self.mainChar.strength = 10;
+    self.enemy1_health = 30;
+    self.enemy2_health = 70;
+    self.enemy3_health = 120;
+
     
     self.tempHealth = self.mainChar.health;
     
@@ -172,21 +169,25 @@
     }
 } */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    Status *dest = segue.destinationViewController;
+    
+    dest.tableChar = self.mainChar;
 }
-*/
+
 
 - (IBAction)statusButton:(id)sender {
 }
 
 - (IBAction)investigate:(id)sender {
+    
+    NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility);
+    
+    [self.mainText flashScrollIndicators];
     self.investPress = YES;
     
     if (self.mainChar.gridProgress == 0)    //SQUARE 1
@@ -226,6 +227,9 @@
 }
 
 - (IBAction)left:(id)sender {
+    NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility);
+    
+        [self.mainText flashScrollIndicators];
     
     self.leftPress = YES;
     if (self.mainChar.gridProgress == 0) //SQUARE 1
@@ -256,6 +260,9 @@
 }
 
 - (IBAction)right:(id)sender {
+    NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility);
+    
+        [self.mainText flashScrollIndicators];
     
     self.rightPress = YES;
     
@@ -282,7 +289,7 @@
     
     else if (self.mainChar.gridProgress == 7)
     {
-        self.mainText.text= @"It turns out the bandits were ambushing Delphim city goers at the city gates. For defeating them, the city mayor offers you hospitality. Giving you little time to explore the city, he forces you into your free Inn room where you can get a much needed rest. Use RIGHT and LEFT to move and explore your room, INVESTIGATE when you wish to sleep and move on to the next day.";
+        self.mainText.text= @"It turns out the bandits were ambushing Delphim city goers at the city gates. For defeating them, the city mayor offers you hospitality. Giving you little time to explore the city, he forces you into your free Inn room where you can get a much needed rest. \n\nUse RIGHT and LEFT to move and explore your room, INVESTIGATE when you wish to sleep and move on to the next day.";
         self.mainChar.gridProgress = 8;
     }
     else if (self.mainChar.gridProgress == 8)
@@ -327,6 +334,9 @@
 }
 
 - (IBAction)green:(id)sender {
+    NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility);
+    
+        [self.mainText flashScrollIndicators];
     self.greenPress = YES;
     
     if (self.mainChar.gridProgress == 1) {  //SQ 1!!!!!
@@ -345,7 +355,7 @@
     {
         self.mainText.text = @"Correct! Have a delicious stat bonus, hero. Carry on.\n\nYou gain +5 to Intellect!\n\nPress RIGHT to push on.";
         self.mainChar.gridProgress = 5;
-        self.mainChar.intellect =+5;
+        self.mainChar.intellect +=5;
        // self.buttonProg =5;
     }
     else if(self.mainChar.gridProgress == 6)
@@ -353,7 +363,7 @@
         int enemy_attack = 5 + arc4random_uniform(4);
         int attack = 0;
         int r = arc4random_uniform(5);
-        NSLog(@"Strength during combat: %d",self.mainChar.strength);
+        
         attack = self.mainChar.strength + r;
         
         int newHealth = self.tempHealth - enemy_attack;
@@ -402,7 +412,7 @@
         int enemy_attack = 7 + arc4random_uniform(4);
         int attack = 0;
         int r = arc4random_uniform(5);
-        NSLog(@"Strength during combat: %d",self.mainChar.strength);
+       // NSLog(@"Strength during combat: %d",self.mainChar.strength);
         attack = self.mainChar.strength + r;
         
         int newHealth = self.tempHealth - enemy_attack;
@@ -458,7 +468,7 @@
         int enemy_attack = 10 + arc4random_uniform(4);
         int attack = 0;
         int r = arc4random_uniform(15);
-        NSLog(@"Strength during combat: %d",self.mainChar.strength);
+        //NSLog(@"Strength during combat: %d",self.mainChar.strength);
         attack = self.mainChar.strength + r;
         
         int newHealth = self.tempHealth - enemy_attack;
@@ -487,8 +497,10 @@
 }
 
 
-
 - (IBAction)red:(id)sender {
+    NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility);
+    
+        [self.mainText flashScrollIndicators];
     self.redPress = YES;
     if (self.mainChar.gridProgress == 1) {  //SQ 1
        self.mainText.text = @"'Very well then. But you'll have to start eventually.'";
