@@ -33,7 +33,19 @@
 
 - (void)viewDidLoad
 {
-    int percent = self.statsChar.gridProgress/21;
+    if ([self.statsChar.charType isEqualToString:@"Warrior"]) {
+            self.classImg.image = [UIImage imageNamed:@"warrior.png"];
+    }
+    else if([self.statsChar.charType isEqualToString:@"Archer"]) {
+        self.classImg.image = [UIImage imageNamed:@"archer.png"];
+    }
+    else {
+        self.classImg.image = [UIImage imageNamed:@"mage.png"];
+    }
+    NSLog(@"Game progress: %d",self.statsChar.gridProgress);
+    
+    double percent = self.statsChar.gridProgress/21;
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
      self.Name.text=self.statsChar.charName;
@@ -42,7 +54,7 @@
     self.strength.text=[NSString stringWithFormat:@"%d", self.statsChar.strength];
     self.agility.text=[NSString stringWithFormat:@"%d", self.statsChar.agility];
     self.intellect.text=[NSString stringWithFormat:@"%d", self.statsChar.intellect];
-    self.progress.text=[NSString stringWithFormat:@"%d", percent];
+    self.progress.text=[NSString stringWithFormat:@"%.02f", percent];
     
 }
 

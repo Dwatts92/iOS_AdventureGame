@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *mainText;
 
 
+
 @end
 
 @implementation MainScreen
@@ -54,8 +55,11 @@
 
 
 - (void)viewDidLoad
+
 {
+    //Character *persistantChar = [[Character alloc] init];
     [super viewDidLoad];
+    [self saveItems];
     
     
     self.enemy1_health = 30;
@@ -81,49 +85,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
--(void)gridStart:(int)progress
-{
-    if (progress == 0) {
-        self.mainText.text = @"You've entered the cottage and see an old mysterious man waiting there, grinning. Press INVESTIGATE to speak with him.";
-        while (progress == 0) {
-            
-            if(self.leftPress == YES)
-            {
-                self.mainText.text = @"You see a table covered in dust to your left with nothing on it.";
-                self.leftPress = NO;
-            }
-            
-            if(self.rightPress == YES)
-            {
-                self.mainText.text = @"Strange idols and trinkets adorn the walls to your right.";
-                self.rightPress = NO;
-            }
-            
-            if(self.investPress == YES)
-            {
-                self.mainText.text = @"'Hello there. Turns out I coincidentally have a quest for you, should you choose to accept it. At the end of the zigzagged path of Yondolore, there lies King Bazul. Last year, the King acquired this region's most powerful artifact, The Yondolorian crown. Since then, people have been slowly corrupted in Yondolore and attacking others at random. Please trek through Yondolore to its end, destroy the evil king, and claim the crown to use it for good. Click the right green arrow to accept my quest, and I shall grant you an item to help your travels.'";
-                if(self.greenPress == YES)
-                {
-                    self.mainText.text = @"'Excellent! Take this Necklace of Valor, and I bid you farewell. Good luck hero! Remember to check out the Status screen and instructions if you're confused.'\n\nYou gain the Necklace of Valor! +3 to Agility, Strength and Intellect. +10 to Health.\nYou exit the room, and venture off to the west to continue your journey.";
-                    self.investPress = NO;
-                    progress = 1;
-                }
-                else
-                    self.mainText.text = @"'Very well then. But you'll have to start eventually.'";
-                
-            }  //while loop end
-            
-            self.mainText.text = @"First screen passed.";
-        }
-        
-    }
-    else
-        self.mainText.text = @"Did not recieve progress";
-    
-}
-*/
-/*
+
+//NSCoding
 
 - (NSString *)documentsDirectory
 {
@@ -135,20 +98,35 @@
     //COMMENT IN FOR DIRECTORY VIEW
     
     NSLog(@"%@",[self documentsDirectory]);
-    return [[self documentsDirectory] stringByAppendingPathComponent:@"practiceChar.plist"];
+    return [[self documentsDirectory] stringByAppendingPathComponent:@"Charac.plist"];
     
 }
+
+
+
 
 
 - (void)saveItems
 {
     
-    // create a generic data storage object
+    //create a generic data storage object
+    
+    Character *persistantChar = [[Character alloc] init];
+    
+    
+    persistantChar.charName = self.mainChar.charName;
+    persistantChar.charType = self.mainChar.charType;
+    persistantChar.gridProgress= self.mainChar.gridProgress;
+    persistantChar.health = self.mainChar.health;
+    persistantChar.strength = self.mainChar.strength;
+    persistantChar.agility = self.mainChar.agility;
+    persistantChar.intellect = self.mainChar.intellect;
+    persistantChar.itemCount = self.mainChar.itemCount;
     
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
-    [archiver encodeObject:self.thisChar forKey:@"dataChar"];   //saves our objects to file.
+    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //saves our objects to file.
     
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
@@ -162,12 +140,26 @@
     
     //do we have anything in our documents directory?  If we have anything then load it up
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        Character *persistantChar = [[Character alloc] init];
+        
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        self.thisChar = [unarchiver decodeObjectForKey:@"dataChar"];
+        persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
         [unarchiver finishDecoding];
+        
+        self.mainChar.charName = persistantChar.charName;
+        self.mainChar.charType = persistantChar.charType;
+        self.mainChar.gridProgress = persistantChar.gridProgress;
+        self.mainChar.health = persistantChar.health;
+        self.mainChar.strength = persistantChar.strength;
+        self.mainChar.agility = persistantChar.agility;
+        self.mainChar.intellect = persistantChar.intellect;
+        self.mainChar.itemCount = persistantChar.itemCount;
+        
     }
-} */
+}
+
+
 
 
 

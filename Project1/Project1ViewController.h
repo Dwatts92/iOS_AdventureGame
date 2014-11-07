@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Character.h"
 
 @interface Project1ViewController : UIViewController
 

@@ -11,8 +11,14 @@
 @interface Character : NSObject <NSCoding>
 
 
-@property NSString* name;        //char name
-@property NSString* charType;   //char type or class
+@property NSString* charName;
+@property NSString* charType;
+@property int gridProgress;
+@property int health;
+@property int strength;
+@property int agility;
+@property int intellect;
+@property int itemCount;
 
 
 @end
