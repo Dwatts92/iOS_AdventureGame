@@ -2,8 +2,7 @@
 //  Status.m
 //  Project1
 //
-//  Created by Dylan on 11/5/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+//  Table view for char stats and items
 //
 
 #import "Status.h"
@@ -96,11 +95,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  //  Items *dest = segue.destinationViewController;
-   // Stats *dest2 = segue.destinationViewController;
-    
-   // dest.itemsChar = self.tableChar;
-   // dest2.statsChar = self.tableChar;
     
     if ([segue.identifier isEqualToString:@"itemSegue"]) {
         Items *dest = segue.destinationViewController;

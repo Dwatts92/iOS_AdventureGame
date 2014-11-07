@@ -2,8 +2,7 @@
 //  Stats.h
 //  Project1
 //
-//  Created by Dylan on 11/5/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+// Stats header.
 //
 
 #import <UIKit/UIKit.h>

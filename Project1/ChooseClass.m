@@ -2,8 +2,7 @@
 //  ChooseClass.m
 //  Project1
 //
-//  Created by Dylan on 11/3/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+// Where you pick you character class.
 //
 
 #import "ChooseClass.h"
@@ -15,6 +14,7 @@
 - (IBAction)warrior:(id)sender;
 - (IBAction)archer:(id)sender;
 - (IBAction)mage:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *error;
 
 
 - (IBAction)beginButton:(id)sender;
@@ -90,18 +90,28 @@
 
 - (IBAction)beginButton:(id)sender {
     //self.character.charName = self.characterName.text;
-    if ([self.characterName.text  isEqual: @""])
+    if ([self shouldPerformSegueWithIdentifier:@"toMain" sender:(id)sender] == NO)
     {
-        self.characterName.text = @"Blank";
-        if (self.type == NULL)
-        {
-            self.type = @"Warrior";
-        }
+        self.error.text = @"Please enter a name and pick a character.";
     }
-    self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
+    else{
+        
+        self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
+        self.character.gridProgress = 0;
+    }
     
-    self.character.gridProgress = 0;
-    
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([self.characterName.text  isEqual: @"" ] || self.type==NULL)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 
@@ -116,6 +126,8 @@
      dest.chosenChar = self.character;
  // Pass the selected object to the new view controller.
  }
+
+
 
 
 

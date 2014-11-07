@@ -2,8 +2,7 @@
 //  Project1AppDelegate.h
 //  Project1
 //
-//  Created by Dylan on 11/3/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+// App delegate.
 //
 
 #import <UIKit/UIKit.h>

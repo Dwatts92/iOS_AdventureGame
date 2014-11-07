@@ -2,8 +2,7 @@
 //  IntroStory.m
 //  Project1
 //
-//  Created by Dylan on 11/1/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+// Introduction story based on what character you choose.
 //
 
 #import "IntroStory.h"
@@ -82,6 +81,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     MainScreen *dest = segue.destinationViewController;
+    
+    [self saveItems];
 
     dest.mainChar = self.chosenChar;
 }
@@ -89,4 +90,53 @@
 
 - (IBAction)goButton:(id)sender {
 }
+
+
+
+
+- (NSString *)documentsDirectory
+{
+    
+    return [@"~/Documents" stringByExpandingTildeInPath];
+}
+- (NSString *)dataFilePath
+{
+    //COMMENT IN FOR DIRECTORY VIEW
+    
+    //NSLog(@"%@",[self documentsDirectory]);
+    return [[self documentsDirectory] stringByAppendingPathComponent:@"Character.plist"];
+    
+}
+
+
+
+
+
+- (void)saveItems
+{
+    
+    //create a generic data storage object
+    
+    Character *persistantChar = [[Character alloc] init];
+    
+    
+    persistantChar.charName = self.chosenChar.charName;
+    persistantChar.charType = self.chosenChar.charType;
+    persistantChar.gridProgress= self.chosenChar.gridProgress;
+    persistantChar.health = self.chosenChar.health;
+    persistantChar.strength = self.chosenChar.strength;
+    persistantChar.agility = self.chosenChar.agility;
+    persistantChar.intellect = self.chosenChar.intellect;
+    persistantChar.itemCount = self.chosenChar.itemCount;
+    
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //saves our objects to file.
+    
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath] atomically:YES];
+    
+}
+
 @end

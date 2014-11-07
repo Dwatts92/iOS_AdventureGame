@@ -2,8 +2,7 @@
 //  Stats.m
 //  Project1
 //
-//  Created by Dylan on 11/5/14.
-//  Copyright (c) 2014 Dylan. All rights reserved.
+// Lists stats and game progress of character.
 //
 
 #import "Stats.h"
@@ -42,9 +41,8 @@
     else {
         self.classImg.image = [UIImage imageNamed:@"mage.png"];
     }
-    NSLog(@"Game progress: %d",self.statsChar.gridProgress);
     
-    double percent = self.statsChar.gridProgress/21;
+    double percent = 100 * self.statsChar.gridProgress/21;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
