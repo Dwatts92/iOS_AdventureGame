@@ -1,0 +1,16 @@
+Dylan Watts
+1202780964
+MW 12:00
+Project 1
+
+For my project I did a GUI-Based adventure game, in which I try to emulate text based adventure games back on old computers. The game essentially is picking actions based on what the dialogue in the scroll gives you. The game takes place on a grid-like map. There are 3 rows to conquer, you will start in the top row, move through 3 squares/scenarios, and then you will begin in the next row. 
+The game will save progress after each scenario or square is completed. You can click the status button to see your stats and character name and type, as well as item collection. You can exit at any time, then come back and continue at the beginning of the square/scenario, or start a new game.
+
+
+Everything else and most of the above is explained through the gameplay in simple detail with the text scroll view below the grid., I tell you what buttons and things to press in BOLD letters to get through it quickly. Apologies for all the reading of text, but I did try to make the game short for easier grading.
+
+I believe I have everything done for my main goals, and a bit of my pipeline goals as well (intro story based on what character you picked, attacking and blocking in combat).
+
+Please let me know if you have any questions at ddwatts@asu.edu
+
+P.S. I will be adding better commentation on the gitHub version for future contributors in the next assignment.

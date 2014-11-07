@@ -50,6 +50,7 @@
 		198918671A0C483A007AD507 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918561A0C483A007AD507 /* red.png */; };
 		1989186A1A0C4843007AD507 /* warrior.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918681A0C4843007AD507 /* warrior.png */; };
 		1989186B1A0C4843007AD507 /* warStory.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918691A0C4843007AD507 /* warStory.png */; };
+		1989186D1A0CA6B3007AD507 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1989186C1A0CA6B3007AD507 /* About.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		198918561A0C483A007AD507 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		198918681A0C4843007AD507 /* warrior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warrior.png; sourceTree = "<group>"; };
 		198918691A0C4843007AD507 /* warStory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warStory.png; sourceTree = "<group>"; };
+		1989186C1A0CA6B3007AD507 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 		1904E1FE1A0798F1002ABC66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1989186C1A0CA6B3007AD507 /* About.txt */,
 				1904E2441A083EFD002ABC66 /* GameImages */,
 				1904E1FF1A0798F1002ABC66 /* Project1-Info.plist */,
 				1904E2001A0798F1002ABC66 /* InfoPlist.strings */,
@@ -364,6 +367,7 @@
 				198918671A0C483A007AD507 /* red.png in Resources */,
 				198918571A0C483A007AD507 /* archer.png in Resources */,
 				198918431A0C45BE007AD507 /* rightButton.png in Resources */,
+				1989186D1A0CA6B3007AD507 /* About.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
