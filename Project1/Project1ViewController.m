@@ -9,11 +9,11 @@
 
 @interface Project1ViewController ()
 
-- (IBAction)startButton:(id)sender;
+- (IBAction)startButton:(id)sender;         //new game button
 
-@property (weak, nonatomic) IBOutlet UIButton *cont;
+@property (weak, nonatomic) IBOutlet UIButton *cont;        //continue button. only appears if there is character data in storage.
 
-@property LocalChar *loadChar;
+@property LocalChar *loadChar;      //new LocalChar just for quick load to make continue button appear
 
 
 @end
@@ -23,11 +23,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.cont.hidden = NO;
+    self.cont.hidden = NO;      //continue button starts unhidden
     
-     self.loadChar = [[LocalChar alloc] initWithName:@"NOLOAD"initWithType:@"NOTYPE"];
+     self.loadChar = [[LocalChar alloc] initWithName:@"NOLOAD"initWithType:@"NOTYPE"]; //creates dummy local character to test if theres data or not
     
-    [self loadItems];
+    
+    [self loadItems];   //loads Character from storage
+    
+    // if dummy local character is unmodified, that means there was no character stored and the user hasn't played
+    // a game yet. So hide the continue button because of this.
+    
     if ([self.loadChar.charName  isEqual: @"NOLOAD"] || [self.loadChar.charType  isEqual: @"NOTYPE"]) {
         self.cont.hidden = YES;
     }
@@ -44,7 +49,7 @@
 {
     [super viewWillAppear:animated];
     // hide navigation bar 
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES]; //hides navigation bar, don't want it until status screen.
 }
 
 - (IBAction)startButton:(id)sender {
@@ -76,16 +81,16 @@
     
     //do we have anything in our documents directory?  If we have anything then load it up
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        Character *persistantChar = [[Character alloc] init];
+        Character *persistantChar = [[Character alloc] init];   //create NSCoding object Character to get data from localChar
         
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
-        [unarchiver finishDecoding];
+        [unarchiver finishDecoding];    //get NSCoding Character from storage
         
         NSLog(@"Contents: %@",[persistantChar description]);
     
-        self.loadChar.charName = persistantChar.charName;
+        self.loadChar.charName = persistantChar.charName;   //store values from Character into LocalChar
         self.loadChar.charType = persistantChar.charType;
         self.loadChar.gridProgress = persistantChar.gridProgress;
         self.loadChar.health = persistantChar.health;
@@ -100,7 +105,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    if ([segue.identifier isEqualToString:@"contSegue"]) {
+    if ([segue.identifier isEqualToString:@"contSegue"]) {  //segue for continue button, passes on user's character to next view if it was loaded.
+        
         MainScreen *dest = segue.destinationViewController;
         dest.mainChar = self.loadChar;
     }

@@ -8,14 +8,14 @@
 #import "Stats.h"
 
 @interface Stats ()
-@property (weak, nonatomic) IBOutlet UILabel *Name;
+@property (weak, nonatomic) IBOutlet UILabel *Name;     //character stats
 @property (weak, nonatomic) IBOutlet UILabel *Class;
 @property (weak, nonatomic) IBOutlet UILabel *health;
 @property (weak, nonatomic) IBOutlet UILabel *strength;
 @property (weak, nonatomic) IBOutlet UILabel *agility;
 @property (weak, nonatomic) IBOutlet UILabel *intellect;
 @property (weak, nonatomic) IBOutlet UILabel *progress;
-@property (weak, nonatomic) IBOutlet UIImageView *classImg;
+@property (weak, nonatomic) IBOutlet UIImageView *classImg;     //image on view
 
 @end
 
@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad
 {
-    if ([self.statsChar.charType isEqualToString:@"Warrior"]) {
+    if ([self.statsChar.charType isEqualToString:@"Warrior"]) {         //changes the image to your character if you chose them.
             self.classImg.image = [UIImage imageNamed:@"warrior.png"];
     }
     else if([self.statsChar.charType isEqualToString:@"Archer"]) {
@@ -42,13 +42,13 @@
         self.classImg.image = [UIImage imageNamed:@"mage.png"];
     }
     
-    double percent = 100 * self.statsChar.gridProgress/21;
+    double percent = 100 * self.statsChar.gridProgress/21;      //calculates game progress as a percent.
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
      self.Name.text=self.statsChar.charName;
     self.Class.text=self.statsChar.charType;
-    self.health.text=[NSString stringWithFormat:@"%d", self.statsChar.health];
+    self.health.text=[NSString stringWithFormat:@"%d", self.statsChar.health];      //puts stats in to labels
     self.strength.text=[NSString stringWithFormat:@"%d", self.statsChar.strength];
     self.agility.text=[NSString stringWithFormat:@"%d", self.statsChar.agility];
     self.intellect.text=[NSString stringWithFormat:@"%d", self.statsChar.intellect];
@@ -62,15 +62,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

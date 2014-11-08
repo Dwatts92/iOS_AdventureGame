@@ -13,6 +13,6 @@
 
 @interface MainScreen : UIViewController
 
-@property LocalChar* mainChar;
+@property LocalChar* mainChar;  //local character used in main screen
 
 @end

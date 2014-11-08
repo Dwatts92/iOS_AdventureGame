@@ -10,27 +10,28 @@
 
 @interface MainScreen ()
 
-@property (weak, nonatomic) IBOutlet UILabel *nameDisplay;
+@property (weak, nonatomic) IBOutlet UILabel *nameDisplay; //displays name and type for testing, hidden
 @property (weak, nonatomic) IBOutlet UILabel *typeDisplay;
-- (IBAction)statusButton:(id)sender;
+
+- (IBAction)statusButton:(id)sender;    //button actions
 - (IBAction)investigate:(id)sender;
 - (IBAction)left:(id)sender;
 - (IBAction)right:(id)sender;
 - (IBAction)green:(id)sender;
 - (IBAction)red:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *gridPicture;
+@property (weak, nonatomic) IBOutlet UIImageView *gridPicture;  //picture in grid, changes everytime a scenario is finished
 
 
-@property BOOL daunting;
-@property int buttonProg;
+@property BOOL daunting;    //check if optional item is aquired.
 
-@property int enemy1_health;
+
+@property int enemy1_health;    //health values for each of the 3 enemies/battles
 @property int enemy2_health;
 @property int enemy3_health;
-@property int tempHealth;
+@property int tempHealth;       //temp health
 
-@property (weak, nonatomic) IBOutlet UITextView *mainText;
+@property (weak, nonatomic) IBOutlet UITextView *mainText;  //The scrolling view with text, all game text goes in here. Changes with button hits. User plays the game by reading this and reacting with buttons.
 
 
 
@@ -52,24 +53,24 @@
 - (void)viewDidLoad
 
 {
-    //Character *persistantChar = [[Character alloc] init];
+
     [super viewDidLoad];
     [self loadItems];
     
     
-    self.enemy1_health = 70;
+    self.enemy1_health = 70;        //health for enemies
     self.enemy2_health = 120;
     self.enemy3_health = 180;
 
     
-    self.tempHealth = self.mainChar.health;
+    self.tempHealth = self.mainChar.health;     //temp health;
     
-    self.mainText.text = @"Welcome to the main view of the grid/map. Press INVESTIGATE to begin the event, LEFT or RIGHT arrows to move and explore the area.\n\n Or If you're continuing from a previous adventure, press the RIGHT arrow to start right after where you left off. The game will auto save after each square/scenario beaten. \n\nYou will be represented by a purple avatar on the grid when you start.";
+    //health in battles uses your base damage value, but from there your health will increase and decrease do to attacking and blocking, has no affect on actual health value held in character stats (which is the base health).
+    
+    self.mainText.text = @"Welcome to the main view of the grid/map. Press INVESTIGATE to begin the event, LEFT or RIGHT arrows to move and explore the area.\n\n Or If you're continuing from a previous adventure, press the RIGHT arrow to start right after where you left off. The game will auto save after each square/scenario beaten. \n\nYou will be represented by a purple avatar on the grid when you start.";   //opening text. user presses RIGHT to continue right where they left off if loading a character form storage
 
-    self.nameDisplay.text = self.mainChar.charName;
+    self.nameDisplay.text = self.mainChar.charName;     //display for error checking and testing, hidden.
     self.typeDisplay.text = self.mainChar.charType;
-    
-   //[self gridStart:0];
 
     // Do any additional setup after loading the view.
 }
@@ -106,10 +107,10 @@
     
     //create a generic data storage object
     
-    Character *persistantChar = [[Character alloc] init];
+    Character *persistantChar = [[Character alloc] init]; //allocates data for NSCoding object, Character
     
     
-    persistantChar.charName = self.mainChar.charName;
+    persistantChar.charName = self.mainChar.charName; //fills up Character with LocalCharacter stats
     persistantChar.charType = self.mainChar.charType;
     persistantChar.gridProgress= self.mainChar.gridProgress;
     persistantChar.health = self.mainChar.health;
@@ -121,7 +122,7 @@
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
-    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //saves our objects to file.
+    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //stores Character to file
     
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
@@ -135,16 +136,16 @@
     
     //do we have anything in our documents directory?  If we have anything then load it up
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        Character *persistantChar = [[Character alloc] init];
+        Character *persistantChar = [[Character alloc] init];   //create NSCoding object, Character
         
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
         [unarchiver finishDecoding];
         
-                NSLog(@"Contents: %@",[persistantChar description]);
+              //  NSLog(@"Contents: %@",[persistantChar description]);  //shown to make sure its loading correctly
         
-        self.mainChar.charName = persistantChar.charName;
+        self.mainChar.charName = persistantChar.charName;   //load storage stats into local character
         self.mainChar.charType = persistantChar.charType;
         self.mainChar.gridProgress = persistantChar.gridProgress;
         self.mainChar.health = persistantChar.health;
@@ -165,25 +166,43 @@
 {
     Status *dest = segue.destinationViewController;
     
-    dest.tableChar = self.mainChar;
+    dest.tableChar = self.mainChar;         //sends character stats to status screen for usage
 }
 
 
 - (IBAction)statusButton:(id)sender {
 }
 
+
+/*
+ Below is the logic for the game. The user presses a button, is shown text, and then presses a new button based on that text.
+ The gridProgress is changed when ever I want to change states to make it so pushing the same button again can produce different results. For example, you start at gridProgress 0. 
+ If you explore by hitting the left or right buttons, the text will change, but the progress won't. The first square requires you to hit investigate button to advance, so when you do the gridProgress changes to 1 in the investigate IBAction method.
+ Now since there's no if condition for gridProgress 1 in the other buttons, the user won't back track or loop progression. 
+ Then the user could get asked to press a green button to accept something in the text or deny it, and progress from there, the gridProgress would be updated in the green and red button IBAction method.
+ At the end of each scenario or square on the grid, the user is asked to press the right button to move their character and continue. The game saves at this point, so when loaded up, the user just hits the right button and they start off right on the next square.
+ The picture on the screen is changed at this point to reflect movement and where you are on the grid.
+ There are different text branches and rewards given to user depending on what class they choose and what stats they have.
+ 
+ 
+ Each row of the grid has a combat scenario at the end which is done by attacking with the green button and blocking with the red button. To understand combat, scroll down to those button methods.
+ */
+
+
 - (IBAction)investigate:(id)sender {
     
-    [self.mainText flashScrollIndicators];
+    [self.mainText flashScrollIndicators];  //flashes scroll indicators to let user know you can scroll
     
     if (self.mainChar.gridProgress == 0)    //SQUARE 1
     {
-        self.gridPicture.image = [UIImage imageNamed:@"Grid1.png"];
+        self.gridPicture.image = [UIImage imageNamed:@"Grid1.png"];  //update picture, user avatar appears at first square.
         
-        //self.buttonProg = 0;
+        //text shown at first square after hitting investigate
         self.mainText.text = @"You've stepped into the cottage and see the stranger awaiting you.\n\n'Hello there. Turns out I coincidentally have a quest for you, should you choose to accept it. At the end of the strangely linear path of Yondolore, there lies King Bazul. Last year, the King acquired this region's most powerful artifact, The Yondolorian crown. Since then, people have been slowly corrupted in Yondolore and attacking others at random. Please trek through Yondolore to its end, destroy the evil king, and claim the crown to use it for good. \n\nClick the GREEN button to accept my quest, and I shall grant you an item to help your travels.'";
-        //self.buttonProg = 1;
-        self.mainChar.gridProgress = 1;
+
+        self.mainChar.gridProgress = 1; //progress increases
+        
+        //repeat for other methods.
     }
     else if (self.mainChar.gridProgress == 3) //SQ 2
     {
@@ -194,7 +213,7 @@
     {
         self.mainText.text=@"Tired from your journey, you fall atop your bed and quickly drift off to sleep. 8 hours of sleeping like a baby later, you awake and continue to the Mystic Meadows. \n\n Hit RIGHT to move East and continue.";
         self.mainChar.gridProgress = 9;
-          [self saveItems];
+          [self saveItems]; // scenario/square finished, saves before hitting right
 
     }
     else if (self.mainChar.gridProgress == 10)
@@ -206,7 +225,7 @@
     {
         self.mainText.text=@"You take the wizard up on his offer.'Normally it would cost you, but you and me share a common enemy. Bazul murdered my family.' Stoic and silent after that, the wizard led you to a shoddy looking boat right by the river. It was no ordinary old boat though, it was embued with magic strong enough to break the spell. You got on the boat with the wizard and sailed East towards Bazul. \n\nPress RIGHT to continue, you're almost there.";
         self.mainChar.gridProgress = 16;
-          [self saveItems];
+          [self saveItems]; // scenario/square finished, saves before hitting right
     }
     
 }
@@ -228,12 +247,12 @@
     else if (self.mainChar.gridProgress == 8)
     {
         self.mainText.text = @"You see your bed adorned with silk, scarlet sheets to the left. You notice something underneath it...it's the Cloak of Daunting! You found an optional item!\n\nYou get + 5 to Agility.\n\nTired from your journey, you fall atop your bed and quickly drift off to sleep. 8 hours of sleeping like a baby later, you awake and continue to the Mystic Meadows. Hit RIGHT to move East and continue.";
-        self.daunting = YES;
-        self.mainChar.agility += 5;
+        self.daunting = YES;    //optional item required, will be added to items
+        self.mainChar.agility += 5;     //stats increase from item
         self.mainChar.gridProgress = 9;
         self.mainChar.itemCount = 3;
         
-        [self saveItems];
+        [self saveItems];  // scenario/square finished, saves before hitting right
     }
     else if (self.mainChar.gridProgress == 10)
     {
@@ -258,11 +277,10 @@
     }
     else if (self.mainChar.gridProgress == 2) //SQ 2
     {
-        self.gridPicture.image = [UIImage imageNamed:@"Grid2.png"];
+        self.gridPicture.image = [UIImage imageNamed:@"Grid2.png"]; //the beginning of each square/scenario
         self.mainText.text = @"You come to a bridge guarded by a slimey troll. His face is stoic and body unmoving. \n\nLike before, hit INVESTIGATE to check him out, or LEFT or RIGHT to move around and inspect the area.";
         self.mainChar.gridProgress = 3;
         
-        //SAVE HERE
     }
     else if (self.mainChar.gridProgress == 3)
     {
@@ -331,7 +349,7 @@
         self.mainChar.gridProgress = 21;
         [self saveItems];
     }
-    else if (self.mainChar.gridProgress == 21)
+    else if (self.mainChar.gridProgress == 21)  //finished game
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid10.png"];
         self.mainText.text=@"You've completed the game! Exit out and start a New Game if wish to play again.";
@@ -344,9 +362,9 @@
     
         [self.mainText flashScrollIndicators];
     
-    if (self.mainChar.gridProgress == 1) {  //SQ 1!!!!!
+    if (self.mainChar.gridProgress == 1) {  //SQ 1
         self.mainText.text = @"'Excellent! Take this Necklace of Valor, and I bid you farewell. Good luck hero! Remember to check out the STATUS screen and the included 'About' text file if you're confused.'\n\nYou gain the Necklace of Valor! +3 to Agility, Strength and Intellect. +10 to Health.\n\nYou exit the room, and close the door to the cottage.\n\nClick the RIGHT button to carry on west to your quest.";
-        self.mainChar.agility +=3;
+        self.mainChar.agility +=3;  //stats update for getting item as described avoe
         self.mainChar.strength +=3;
         self.mainChar.intellect +=3;
         self.mainChar.health+=10;
@@ -354,7 +372,7 @@
         
         self.mainChar.gridProgress = 2;
         
-        [self saveItems];
+        [self saveItems]; // scenario/square finished, saves before hitting right
         
        // self.buttonProg = 2;
     }
@@ -367,38 +385,45 @@
         [self saveItems];
        // self.buttonProg =5;
     }
-    else if(self.mainChar.gridProgress == 6)
+    
+    /*
+      Combat code, attacking: These are run if user is attacking with the green button.
+     */
+    
+    else if(self.mainChar.gridProgress == 6) //FIRST BATTLE
     {
-        int enemy_attack = 5 + arc4random_uniform(4);
-        int attack = 0;
-        int r = arc4random_uniform(5);
+        int enemy_attack = 5 + arc4random_uniform(4); //enemy attack value
+        int attack = 0;   //your attack value
+        int r = arc4random_uniform(5);  //your randomizer
         
-        attack = self.mainChar.strength + r;
+        attack = self.mainChar.strength + r;    //add randomizer and your strength for calculation
         
-        int newHealth = self.tempHealth - enemy_attack;
-        self.enemy1_health = self.enemy1_health - attack;
+        int newHealth = self.tempHealth - enemy_attack;  //health deducted for you
+        self.enemy1_health = self.enemy1_health - attack;  //health deducted for enemy
         
-        if (self.tempHealth > 0 && self.enemy1_health > 0) {  //ATTACK CODE HERE
+        if (self.tempHealth > 0 && self.enemy1_health > 0) {  //if no one has died yet
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou attack first for %d damage.\n\nEnemy swings back for %d damage.\n\nYour resulting health is %d\n\nClick GREEN to attack again, or RED to block and heal.",self.tempHealth,attack,enemy_attack, newHealth];
-            self.tempHealth = newHealth;
+            self.tempHealth = newHealth;  //stores newly deducted health
         }
-        else if (self.tempHealth <= 0)
+        else if (self.tempHealth <= 0) //if you die
         {
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
-            self.tempHealth = self.mainChar.health + 20;
-            self.enemy1_health = 30;
+            self.tempHealth = self.mainChar.health + 20; //health increase
+            self.enemy1_health = 70; //reset enemy health. had these lower for grading so if they died they could quickly get through the combat again. bumped them up again for fun. (combat is still easy as pie though)
         }
-        else if (self.enemy1_health <= 0)
+        else if (self.enemy1_health <= 0) //IF ENEMY DIES
         {
             self.mainText.text = @"You destroy the bandits with a final attack. You find an item amongst their corpses, Chainmail of Martyrs.\n\nYou gain +15 Health from the chainmail, and +8 to Strength!\n\nPress the RIGHT arrow button to continue through the gates on your quest.";
             self.mainChar.health += 15;
-            self.mainChar.strength += 8;
+            self.mainChar.strength += 8;    //You win, gain item and stat additions
             self.mainChar.itemCount = 2;
-            self.mainChar.gridProgress = 7;
+            self.mainChar.gridProgress = 7;  //grid Progress increases so combat ends
             self.tempHealth = self.mainChar.health;
-            self.enemy1_health = 30;
+            self.enemy1_health = 70;        //reset health values
             
-            [self saveItems];
+            [self saveItems]; //save progress before hitting right
+            
+            //works the same way for the other battles.
         }
         
     } //end first battle
@@ -442,7 +467,7 @@
         {
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
-            self.enemy2_health = 40;
+            self.enemy2_health = 120;
         }
         else if (self.enemy2_health <= 0)
         {
@@ -455,7 +480,7 @@
                 self.mainChar.itemCount = 4;
             self.mainChar.gridProgress = 14;
             self.tempHealth = self.mainChar.health;
-            self.enemy2_health = 40;
+            self.enemy2_health = 120;
             
             [self saveItems];
         }
@@ -482,10 +507,10 @@
         }
     }
     
-    //FINAL BATTLE
+    //start FINAL BATTLE
     
     
-    else if(self.mainChar.gridProgress == 19)    //SECOND BATTLE
+    else if(self.mainChar.gridProgress == 19)    //THIRD BATTLE
     {
         int enemy_attack = 10 + arc4random_uniform(4);
         int attack = 0;
@@ -504,14 +529,14 @@
         {
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
-            self.enemy3_health = 50;
+            self.enemy3_health = 180;
         }
         else if (self.enemy3_health <= 0)
         {
             self.mainText.text = @"You strike down King Bazul's 3 forms. He bursts into ash, no last words, no final forms. Just a swift death. His crown drops to the ground. \n\nPress RIGHT arrow to pick up the crown...";
             self.mainChar.gridProgress = 20;
             self.tempHealth = self.mainChar.health;
-            self.enemy3_health = 50;
+            self.enemy3_health = 180;
         }
         
     } //end FINAL BATTLE
@@ -536,31 +561,39 @@
         [self saveItems];
        // self.buttonProg =5;
     }
-    else if (self.mainChar.gridProgress == 6) {      //BATTLE BLOCK CODE
-        int healHealth = arc4random_uniform(15);
-        int newHealth = self.tempHealth + healHealth;
+    
+    /*
+     Combat code, blocking: These are run if user is blocking and healing with red button. What I made
+     interesting about blocking is that you or the enemy can bleed out from previous attack and die while you block.
+     This is reflected in the text, and is why theres if statements for death conditions.
+     */
+    
+    else if (self.mainChar.gridProgress == 6) {
+        int healHealth = arc4random_uniform(15);     //heal small random amount
+        int newHealth = self.tempHealth + healHealth;  //get new health with heal bonus
         
-        if (self.tempHealth > 0 && self.enemy1_health > 0) {
+        if (self.tempHealth > 0 && self.enemy1_health > 0) {   //if you or enemy are alive, continue combat
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou block the enemy's strike and heal up %d health.\n\nYour resulting health is %d\n\nClick GREEN to attack, or RED to block and heal.",self.tempHealth,healHealth,newHealth];
-            self.tempHealth = newHealth;
+            self.tempHealth = newHealth;  //new health
         }
-        else if (self.tempHealth <= 0)
+        else if (self.tempHealth <= 0)   //if you die
         {
             self.mainText.text = @"You tried to block, but your wounds from the previous attack were too much to bear. You have died! Click GREEN button to attack or RED to block and try again. You will be reborn with extra health for replaying the battle.";
-            self.tempHealth = self.mainChar.health + 20;
-            self.enemy1_health = 30;
+            self.tempHealth = self.mainChar.health + 20; //gain health for retry
+            self.enemy1_health = 70;
+            //reset enemy health. had these lower for grading so if they died they could quickly get through the combat again. bumped them up again for fun. (combat is still easy as pie though)
         }
-        else if (self.enemy1_health <= 0)
+        else if (self.enemy1_health <= 0) //IF ENEMY DIES
         {
             self.mainText.text = @"As you, block the bandits bleed out from wounds from the previous attack. You find an item amongst their corpses, Chainmail of Martyrs.\n\nYou gain +15 Health from the chainmail, and +8 to Strength!\n\nPress the RIGHT button to continue through the gates on your quest. All your wounds from combat are healed.";
-            self.mainChar.health += 15;
+            self.mainChar.health += 15;  //gain stats from item
             self.mainChar.strength += 8;
             self.mainChar.itemCount = 2;
-            self.mainChar.gridProgress = 7;
-            self.tempHealth = self.mainChar.health;
-            self.enemy1_health = 30;
+            self.mainChar.gridProgress = 7;  //continue progress
+            self.tempHealth = self.mainChar.health;  //reset health
+            self.enemy1_health = 70;
             
-            [self saveItems];
+            [self saveItems]; //save before hitting right
         }
         
     } //end first battle
@@ -584,7 +617,7 @@
         {
             self.mainText.text = @"You tried to block, but your wounds from the previous attack were too much to bear. You have died! Click GREEN button to attack or RED to block and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
-            self.enemy2_health = 40;
+            self.enemy2_health = 120;
         }
         else if (self.enemy2_health <= 0)
         {
@@ -599,7 +632,7 @@
             self.mainChar.gridProgress = 14;
             
             self.tempHealth = self.mainChar.health;
-            self.enemy2_health = 40;
+            self.enemy2_health = 120;
             
             [self saveItems];
 
@@ -626,14 +659,14 @@
         {
             self.mainText.text = @"You tried to block, but your wounds from the previous attack were too much to bear. You have died! Click GREEN button to attack or RED to block and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
-            self.enemy3_health = 50;
+            self.enemy3_health = 180;
         }
         else if (self.enemy3_health <= 0)
         {
             self.mainText.text = @"You strike down King Bazul's 3 forms. He bursts into ash, no last words, no final forms. Just a swift death. His crown drops to the ground. \n\nPress RIGHT arrow to pick up the crown...";
             self.mainChar.gridProgress = 20;
             self.tempHealth = self.mainChar.health;
-            self.enemy3_health = 50;
+            self.enemy3_health = 180;
             
         }
         

@@ -13,8 +13,8 @@
 
 @interface Status : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSArray * choices;
+@property (nonatomic, strong) NSArray * choices;        //fills table cell names with array
 
-@property LocalChar *tableChar;
+@property LocalChar *tableChar;     //creates new localChar instance for this screen to get character info from previous screen, and pass it forward
 
 @end

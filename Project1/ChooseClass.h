@@ -2,7 +2,7 @@
 //  ChooseClass.h
 //  Project1
 //
-// Where you pick you character class.
+//  Where you pick you character class.
 //
 
 #import <UIKit/UIKit.h>

@@ -13,6 +13,6 @@
 
 @interface IntroStory : UIViewController
 
-@property LocalChar* chosenChar;
+@property LocalChar* chosenChar;        //get local char from segue
 
 @end

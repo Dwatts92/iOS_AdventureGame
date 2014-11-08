@@ -11,18 +11,18 @@
 
 @property NSString *type;
 
-- (IBAction)warrior:(id)sender;
+- (IBAction)warrior:(id)sender;     //different character types
 - (IBAction)archer:(id)sender;
 - (IBAction)mage:(id)sender;
-@property (weak, nonatomic) IBOutlet UILabel *error;
+@property (weak, nonatomic) IBOutlet UILabel *error;    //error text that gets displayed on view
 
 
-- (IBAction)beginButton:(id)sender;
+- (IBAction)beginButton:(id)sender;     //button to begin game with selected char
 
 
-@property LocalChar* character;
+@property LocalChar* character;     //object of character
 
-@property (weak, nonatomic) IBOutlet UITextField *characterName;
+@property (weak, nonatomic) IBOutlet UITextField *characterName;    //name input to enter for char
 
 @end
 
@@ -47,7 +47,7 @@
     
     
     // Do any additional setup after loading the view.
-    _characterName.delegate = self;
+    _characterName.delegate = self; //delegate set here so I can hide the keyboard upon enter or clicking out
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,42 +67,39 @@
 }
 
 
-- (IBAction)warrior:(id)sender {
+- (IBAction)warrior:(id)sender {  //changes the type based on what avatar you click on
     
     self.type = @"Warrior";
-   // self.character.charType = self.type;
 }
 
 - (IBAction)archer:(id)sender {
     
     self.type = @"Archer";
-   // self.character.charType = self.type;
 }
 
 - (IBAction)mage:(id)sender {
     
     self.type = @"Mage";
-   // self.character.charType = self.type;
 
 }
 
 
 
-- (IBAction)beginButton:(id)sender {
-    //self.character.charName = self.characterName.text;
+- (IBAction)beginButton:(id)sender {        //shows error button and prevents segue if a char type or name weren't chosen.
+    
     if ([self shouldPerformSegueWithIdentifier:@"toMain" sender:(id)sender] == NO)
     {
         self.error.text = @"Please enter a name and pick a character.";
     }
     else{
         
-        self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type];
-        self.character.gridProgress = 0;
+        self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type]; //creats an object of the character, this is passed through almost every segue in the applcation.
+        self.character.gridProgress = 0;        //starting gridprogress at 0
     }
     
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender   //method for if segue should be performed or not.
 {
     if ([self.characterName.text  isEqual: @"" ] || self.type==NULL)
     {
@@ -115,12 +112,10 @@
 }
 
 
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
-     IntroStory *dest = segue.destinationViewController;
+     IntroStory *dest = segue.destinationViewController;    //send character to next view, the IntroStory
      NSLog(@"Name: %@",self.character.charName);
      NSLog(@"Type: %@",self.character.charType);
      dest.chosenChar = self.character;

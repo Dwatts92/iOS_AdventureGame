@@ -8,13 +8,12 @@
 #import "IntroStory.h"
 
 @interface IntroStory ()
-@property (weak, nonatomic) IBOutlet UIImageView *introImage;
-@property (weak, nonatomic) IBOutlet UITextView *introText;
+@property (weak, nonatomic) IBOutlet UIImageView *introImage;       //story image
+@property (weak, nonatomic) IBOutlet UITextView *introText;         //intro story, appears in scroll view
 
-@property (weak, nonatomic) IBOutlet UILabel *typeTest;
+@property (weak, nonatomic) IBOutlet UILabel *typeTest;   //shows name and character type at bottom of screen
 @property (weak, nonatomic) IBOutlet UILabel *nameTest;
 
-@property NSString* story;
 
 - (IBAction)goButton:(id)sender;
 
@@ -35,11 +34,13 @@
 {
     [super viewDidLoad];
 
-    self.typeTest.text = self.chosenChar.charType;
+    self.typeTest.text = self.chosenChar.charType;    //shows name and character type at bottom of screen
     self.nameTest.text = self.chosenChar.charName;
     
+    //each of these following if/if else statements take the type and name of the character, and based on the type choose a different picture to appear up top. The picture is a image related to the backstory of each character, which also depends on what char you pick. Your character name is used in the backstory. Different stats are set for each character; Warrior has 5 more strength, Archer has 5 more agility, and Mage 5 more intellect.
+
+    
     if ([self.chosenChar.charType isEqualToString:@"Warrior"]) {
-        
         self.introImage.image = [UIImage imageNamed:@"warStory.png"];
         
         self.introText.text = [NSString stringWithFormat: @"%@ was shaped into a Warrior from the time he turned 8 within the barbarian city known as Zeltheme, located at the southern edge of Yondolore. It was there he aged with his peers, molded into a soldier built of stone from daily spars, harsh battle training, and meals consisting only of meat. At the age of 25, he was cast out of Zeltheme, as all young adults are, to find a quest and prove himself as a true barbarian. Not long after %@ began the trek, he approached a small cottage with a strange aura. Not keen on knocking, he burst open the door with his ridged axe, and found someone waiting inside...",self.chosenChar.charName,self.chosenChar.charName];
@@ -78,7 +79,7 @@
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender    //save Character, sends local character to next screen.
 {
     MainScreen *dest = segue.destinationViewController;
     
@@ -117,10 +118,10 @@
     
     //create a generic data storage object
     
-    Character *persistantChar = [[Character alloc] init];
+    Character *persistantChar = [[Character alloc] init];   //allocates data for NSCoding object, Character
     
     
-    persistantChar.charName = self.chosenChar.charName;
+    persistantChar.charName = self.chosenChar.charName;     //fills Character up with local character stats.
     persistantChar.charType = self.chosenChar.charType;
     persistantChar.gridProgress= self.chosenChar.gridProgress;
     persistantChar.health = self.chosenChar.health;
@@ -132,7 +133,7 @@
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
-    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //saves our objects to file.
+    [archiver encodeObject:persistantChar forKey:@"dataChar"];   //archives it for persistant storage
     
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];

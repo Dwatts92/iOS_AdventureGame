@@ -2,7 +2,7 @@
 //  Project1AppDelegate.m
 //  Project1
 //
-//App delegate.
+//  App delegate.
 //
 
 #import "Project1AppDelegate.h"

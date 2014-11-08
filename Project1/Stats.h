@@ -2,7 +2,7 @@
 //  Stats.h
 //  Project1
 //
-// Stats header.
+//  Stats header.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,6 +11,6 @@
 
 @interface Stats : UIViewController
 
-@property LocalChar *statsChar;
+@property LocalChar *statsChar;  //new instance of LocalChar that you get from segue.
 
 @end

@@ -11,6 +11,6 @@
 
 @interface Items : UIViewController
 
-@property LocalChar *itemsChar;
+@property LocalChar *itemsChar;     //gets character from segue
 
 @end
