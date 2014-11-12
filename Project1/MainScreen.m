@@ -6,7 +6,8 @@
 // I have explained everything through playing the game.
 
 #import "MainScreen.h"
-
+@import AudioToolbox;
+@import AVFoundation;
 
 @interface MainScreen ()
 
@@ -21,7 +22,7 @@
 - (IBAction)red:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *gridPicture;  //picture in grid, changes everytime a scenario is finished
-
+@property AVAudioPlayer *attack, *block, *investigate, *walk;
 
 @property BOOL daunting;    //check if optional item is aquired.
 
@@ -53,25 +54,48 @@
 - (void)viewDidLoad
 
 {
-
+    
     [super viewDidLoad];
     [self loadItems];
     
+    NSString *path;
+    NSURL *soundUrl;
+    NSError *error;
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    path = [[NSBundle mainBundle] pathForResource:@"attack" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.attack = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    path = [[NSBundle mainBundle] pathForResource:@"block" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.block = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    path = [[NSBundle mainBundle] pathForResource:@"investigate" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.investigate = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    path = [[NSBundle mainBundle] pathForResource:@"walk" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.walk = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
     
     self.enemy1_health = 70;        //health for enemies
     self.enemy2_health = 120;
     self.enemy3_health = 180;
-
+    
     
     self.tempHealth = self.mainChar.health;     //temp health;
     
     //health in battles uses your base damage value, but from there your health will increase and decrease do to attacking and blocking, has no affect on actual health value held in character stats (which is the base health).
     
     self.mainText.text = @"Welcome to the main view of the grid/map. Press INVESTIGATE to begin the event, LEFT or RIGHT arrows to move and explore the area.\n\n Or If you're continuing from a previous adventure, press the RIGHT arrow to start right after where you left off. The game will auto save after each square/scenario beaten. \n\nYou will be represented by a purple avatar on the grid when you start.";   //opening text. user presses RIGHT to continue right where they left off if loading a character form storage
-
+    
     self.nameDisplay.text = self.mainChar.charName;     //display for error checking and testing, hidden.
     self.typeDisplay.text = self.mainChar.charType;
-
+    
     // Do any additional setup after loading the view.
 }
 
@@ -93,7 +117,7 @@
 {
     //COMMENT IN FOR DIRECTORY VIEW
     
-  //  NSLog(@"%@",[self documentsDirectory]);
+    //  NSLog(@"%@",[self documentsDirectory]);
     return [[self documentsDirectory] stringByAppendingPathComponent:@"Character.plist"];
     
 }
@@ -143,7 +167,7 @@
         persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
         [unarchiver finishDecoding];
         
-              //  NSLog(@"Contents: %@",[persistantChar description]);  //shown to make sure its loading correctly
+        //  NSLog(@"Contents: %@",[persistantChar description]);  //shown to make sure its loading correctly
         
         self.mainChar.charName = persistantChar.charName;   //load storage stats into local character
         self.mainChar.charType = persistantChar.charType;
@@ -176,9 +200,9 @@
 
 /*
  Below is the logic for the game. The user presses a button, is shown text, and then presses a new button based on that text.
- The gridProgress is changed when ever I want to change states to make it so pushing the same button again can produce different results. For example, you start at gridProgress 0. 
+ The gridProgress is changed when ever I want to change states to make it so pushing the same button again can produce different results. For example, you start at gridProgress 0.
  If you explore by hitting the left or right buttons, the text will change, but the progress won't. The first square requires you to hit investigate button to advance, so when you do the gridProgress changes to 1 in the investigate IBAction method.
- Now since there's no if condition for gridProgress 1 in the other buttons, the user won't back track or loop progression. 
+ Now since there's no if condition for gridProgress 1 in the other buttons, the user won't back track or loop progression.
  Then the user could get asked to press a green button to accept something in the text or deny it, and progress from there, the gridProgress would be updated in the green and red button IBAction method.
  At the end of each scenario or square on the grid, the user is asked to press the right button to move their character and continue. The game saves at this point, so when loaded up, the user just hits the right button and they start off right on the next square.
  The picture on the screen is changed at this point to reflect movement and where you are on the grid.
@@ -192,14 +216,14 @@
 - (IBAction)investigate:(id)sender {
     
     [self.mainText flashScrollIndicators];  //flashes scroll indicators to let user know you can scroll
-    
+    [self.investigate play];
     if (self.mainChar.gridProgress == 0)    //SQUARE 1
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid1.png"];  //update picture, user avatar appears at first square.
         
         //text shown at first square after hitting investigate
         self.mainText.text = @"You've stepped into the cottage and see the stranger awaiting you.\n\n'Hello there. Turns out I coincidentally have a quest for you, should you choose to accept it. At the end of the strangely linear path of Yondolore, there lies King Bazul. Last year, the King acquired this region's most powerful artifact, The Yondolorian crown. Since then, people have been slowly corrupted in Yondolore and attacking others at random. Please trek through Yondolore to its end, destroy the evil king, and claim the crown to use it for good. \n\nClick the GREEN button to accept my quest, and I shall grant you an item to help your travels.'";
-
+        
         self.mainChar.gridProgress = 1; //progress increases
         
         //repeat for other methods.
@@ -213,8 +237,8 @@
     {
         self.mainText.text=@"Tired from your journey, you fall atop your bed and quickly drift off to sleep. 8 hours of sleeping like a baby later, you awake and continue to the Mystic Meadows. \n\n Hit RIGHT to move East and continue.";
         self.mainChar.gridProgress = 9;
-          [self saveItems]; // scenario/square finished, saves before hitting right
-
+        [self saveItems]; // scenario/square finished, saves before hitting right
+        
     }
     else if (self.mainChar.gridProgress == 10)
     {
@@ -225,21 +249,22 @@
     {
         self.mainText.text=@"You take the wizard up on his offer.'Normally it would cost you, but you and me share a common enemy. Bazul murdered my family.' Stoic and silent after that, the wizard led you to a shoddy looking boat right by the river. It was no ordinary old boat though, it was embued with magic strong enough to break the spell. You got on the boat with the wizard and sailed East towards Bazul. \n\nPress RIGHT to continue, you're almost there.";
         self.mainChar.gridProgress = 16;
-          [self saveItems]; // scenario/square finished, saves before hitting right
+        [self saveItems]; // scenario/square finished, saves before hitting right
     }
     
 }
 
 - (IBAction)left:(id)sender {
     
-        [self.mainText flashScrollIndicators];
+    [self.mainText flashScrollIndicators];
+    [self.walk play];
     
     if (self.mainChar.gridProgress == 0) //SQUARE 1
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid1.png"];
         self.mainText.text = @"You see a table covered in dust to your left with nothing on it. This cottage has been here for a long time.";
     }
-
+    
     else if (self.mainChar.gridProgress == 3) //SQUARE 2
     {
         self.mainText.text= @"To the left of the bridge is just...well, water. Deep water. You could walk around, but the steep river seems to go on for miles.";
@@ -265,10 +290,10 @@
 }
 
 - (IBAction)right:(id)sender {
-   /* NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility); */
+    /* NSLog(@"Max Health: %d \n\n Strength: %d \n\n Intellect %d \n\n Agility %d",self.mainChar.health, self.mainChar.strength,self.mainChar.intellect, self.mainChar.agility); */
     
-        [self.mainText flashScrollIndicators];
-    
+    [self.mainText flashScrollIndicators];
+    [self.walk play];
     
     if (self.mainChar.gridProgress == 0) //SQUARE 1
     {
@@ -307,7 +332,7 @@
     else if (self.mainChar.gridProgress == 9)
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid5.png"];
-       self.mainText.text = @"You start walking through the Mystic Meadows. Not far in front of you, you spot Goph, the fabled spirit of the Meadows. He playfully waves you over. Hit INVESTIGATE to speak with Goph, or RIGHT or LEFT to move and explore the Meadows.";
+        self.mainText.text = @"You start walking through the Mystic Meadows. Not far in front of you, you spot Goph, the fabled spirit of the Meadows. He playfully waves you over. Hit INVESTIGATE to speak with Goph, or RIGHT or LEFT to move and explore the Meadows.";
         self.mainChar.gridProgress = 10;
     }
     else if (self.mainChar.gridProgress == 10)
@@ -354,13 +379,15 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid10.png"];
         self.mainText.text=@"You've completed the game! Exit out and start a New Game if wish to play again.";
     }
-
+    
     
 }
 
 - (IBAction)green:(id)sender {
     
-        [self.mainText flashScrollIndicators];
+    [self.mainText flashScrollIndicators];
+    
+    [self.attack play];
     
     if (self.mainChar.gridProgress == 1) {  //SQ 1
         self.mainText.text = @"'Excellent! Take this Necklace of Valor, and I bid you farewell. Good luck hero! Remember to check out the STATUS screen and the included 'About' text file if you're confused.'\n\nYou gain the Necklace of Valor! +3 to Agility, Strength and Intellect. +10 to Health.\n\nYou exit the room, and close the door to the cottage.\n\nClick the RIGHT button to carry on west to your quest.";
@@ -374,7 +401,7 @@
         
         [self saveItems]; // scenario/square finished, saves before hitting right
         
-       // self.buttonProg = 2;
+        // self.buttonProg = 2;
     }
     else if(self.mainChar.gridProgress == 4)  //SQ 2
     {
@@ -383,11 +410,11 @@
         self.mainChar.intellect +=5;
         
         [self saveItems];
-       // self.buttonProg =5;
+        // self.buttonProg =5;
     }
     
     /*
-      Combat code, attacking: These are run if user is attacking with the green button.
+     Combat code, attacking: These are run if user is attacking with the green button.
      */
     
     else if(self.mainChar.gridProgress == 6) //FIRST BATTLE
@@ -453,7 +480,7 @@
         int enemy_attack = 7 + arc4random_uniform(4);
         int attack = 0;
         int r = arc4random_uniform(5);
-       // NSLog(@"Strength during combat: %d",self.mainChar.strength);
+        // NSLog(@"Strength during combat: %d",self.mainChar.strength);
         attack = self.mainChar.strength + r;
         
         int newHealth = self.tempHealth - enemy_attack;
@@ -540,16 +567,18 @@
         }
         
     } //end FINAL BATTLE
-
+    
 }
 
 
 - (IBAction)red:(id)sender {
     
-        [self.mainText flashScrollIndicators];
-
+    [self.mainText flashScrollIndicators];
+    
+    [self.block play];
+    
     if (self.mainChar.gridProgress == 1) {  //SQ 1
-       self.mainText.text = @"'Very well then. But you'll have to start eventually.'";
+        self.mainText.text = @"'Very well then. But you'll have to start eventually.'";
     }
     
     else if(self.mainChar.gridProgress == 4)  //SQ 2
@@ -559,7 +588,7 @@
         self.mainChar.gridProgress = 5;
         
         [self saveItems];
-       // self.buttonProg =5;
+        // self.buttonProg =5;
     }
     
     /*
@@ -599,10 +628,10 @@
     } //end first battle
     else if (self.mainChar.gridProgress == 11)
     {
-
-            self.mainText.text = @"'Aw come on, race me'!";
-
-        }
+        
+        self.mainText.text = @"'Aw come on, race me'!";
+        
+    }
     
     
     else if (self.mainChar.gridProgress == 13) {      //BATTLE BLOCK CODE 2
@@ -635,7 +664,7 @@
             self.enemy2_health = 120;
             
             [self saveItems];
-
+            
         }
         
     } //end second battle
@@ -671,7 +700,7 @@
         }
         
     } //end last battle
-
+    
     
     
 }

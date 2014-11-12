@@ -4,8 +4,9 @@
 //
 // Where you pick you character class.
 //
-
 #import "ChooseClass.h"
+@import AudioToolbox;
+@import AVFoundation;
 
 @interface ChooseClass ()
 
@@ -23,6 +24,7 @@
 @property LocalChar* character;     //object of character
 
 @property (weak, nonatomic) IBOutlet UITextField *characterName;    //name input to enter for char
+@property AVAudioPlayer *warrior, *mage, *archer, *begin;
 
 @end
 
@@ -44,7 +46,26 @@
 {
     [super viewDidLoad];
     
+    NSString *path = @"";
+    NSURL *soundUrl;
+    NSError *error;
     
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    path = [[NSBundle mainBundle] pathForResource:@"warrior" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.warrior = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"archer" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.archer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"mage" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.mage = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"begin" ofType:@"mp3"];
+    soundUrl = [NSURL fileURLWithPath:path];
+    self.begin = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
     
     // Do any additional setup after loading the view.
     _characterName.delegate = self; //delegate set here so I can hide the keyboard upon enter or clicking out
@@ -70,17 +91,20 @@
 - (IBAction)warrior:(id)sender {  //changes the type based on what avatar you click on
     
     self.type = @"Warrior";
+    [self.warrior play];
 }
 
 - (IBAction)archer:(id)sender {
     
     self.type = @"Archer";
+    [self.archer play];
 }
 
 - (IBAction)mage:(id)sender {
     
     self.type = @"Mage";
-
+    [self.mage play];
+    
 }
 
 
@@ -95,6 +119,7 @@
         
         self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type]; //creats an object of the character, this is passed through almost every segue in the applcation.
         self.character.gridProgress = 0;        //starting gridprogress at 0
+        [self.begin play];
     }
     
 }
@@ -113,17 +138,13 @@
 
 
 
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-     IntroStory *dest = segue.destinationViewController;    //send character to next view, the IntroStory
-     NSLog(@"Name: %@",self.character.charName);
-     NSLog(@"Type: %@",self.character.charType);
-     dest.chosenChar = self.character;
- // Pass the selected object to the new view controller.
- }
-
-
-
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    IntroStory *dest = segue.destinationViewController;    //send character to next view, the IntroStory
+    NSLog(@"Name: %@",self.character.charName);
+    NSLog(@"Type: %@",self.character.charType);
+    dest.chosenChar = self.character;
+    // Pass the selected object to the new view controller.
+}
 
 @end

@@ -51,6 +51,14 @@
 		1989186A1A0C4843007AD507 /* warrior.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918681A0C4843007AD507 /* warrior.png */; };
 		1989186B1A0C4843007AD507 /* warStory.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918691A0C4843007AD507 /* warStory.png */; };
 		1989186D1A0CA6B3007AD507 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1989186C1A0CA6B3007AD507 /* About.txt */; };
+		805327D01A13166E009F1612 /* mage.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327C81A13166E009F1612 /* mage.mp3 */; };
+		805327D11A13166E009F1612 /* investigate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327C91A13166E009F1612 /* investigate.mp3 */; };
+		805327D21A13166E009F1612 /* attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CA1A13166E009F1612 /* attack.mp3 */; };
+		805327D31A13166E009F1612 /* archer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CB1A13166E009F1612 /* archer.mp3 */; };
+		805327D41A13166E009F1612 /* warrior.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CC1A13166E009F1612 /* warrior.mp3 */; };
+		805327D51A13166E009F1612 /* walk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CD1A13166E009F1612 /* walk.mp3 */; };
+		805327D61A13166E009F1612 /* block.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CE1A13166E009F1612 /* block.mp3 */; };
+		805327D71A13166E009F1612 /* begin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 805327CF1A13166E009F1612 /* begin.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +129,14 @@
 		198918681A0C4843007AD507 /* warrior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warrior.png; sourceTree = "<group>"; };
 		198918691A0C4843007AD507 /* warStory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warStory.png; sourceTree = "<group>"; };
 		1989186C1A0CA6B3007AD507 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
+		805327C81A13166E009F1612 /* mage.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mage.mp3; sourceTree = "<group>"; };
+		805327C91A13166E009F1612 /* investigate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = investigate.mp3; sourceTree = "<group>"; };
+		805327CA1A13166E009F1612 /* attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = attack.mp3; sourceTree = "<group>"; };
+		805327CB1A13166E009F1612 /* archer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = archer.mp3; sourceTree = "<group>"; };
+		805327CC1A13166E009F1612 /* warrior.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warrior.mp3; sourceTree = "<group>"; };
+		805327CD1A13166E009F1612 /* walk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = walk.mp3; sourceTree = "<group>"; };
+		805327CE1A13166E009F1612 /* block.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = block.mp3; sourceTree = "<group>"; };
+		805327CF1A13166E009F1612 /* begin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = begin.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +226,14 @@
 		1904E1FE1A0798F1002ABC66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				805327C81A13166E009F1612 /* mage.mp3 */,
+				805327C91A13166E009F1612 /* investigate.mp3 */,
+				805327CA1A13166E009F1612 /* attack.mp3 */,
+				805327CB1A13166E009F1612 /* archer.mp3 */,
+				805327CC1A13166E009F1612 /* warrior.mp3 */,
+				805327CD1A13166E009F1612 /* walk.mp3 */,
+				805327CE1A13166E009F1612 /* block.mp3 */,
+				805327CF1A13166E009F1612 /* begin.mp3 */,
 				1989186C1A0CA6B3007AD507 /* About.txt */,
 				1904E2441A083EFD002ABC66 /* GameImages */,
 				1904E1FF1A0798F1002ABC66 /* Project1-Info.plist */,
@@ -347,14 +371,22 @@
 				198918651A0C483A007AD507 /* mage.png in Resources */,
 				1989186B1A0C4843007AD507 /* warStory.png in Resources */,
 				198918631A0C483A007AD507 /* Grid9.png in Resources */,
+				805327D21A13166E009F1612 /* attack.mp3 in Resources */,
 				198918601A0C483A007AD507 /* Grid6.png in Resources */,
 				1989185D1A0C483A007AD507 /* Grid3.png in Resources */,
 				1989185B1A0C483A007AD507 /* Grid1.png in Resources */,
 				1989185A1A0C483A007AD507 /* Grid0.png in Resources */,
+				805327D11A13166E009F1612 /* investigate.mp3 in Resources */,
 				1904E2101A0798F1002ABC66 /* Images.xcassets in Resources */,
+				805327D41A13166E009F1612 /* warrior.mp3 in Resources */,
+				805327D71A13166E009F1612 /* begin.mp3 in Resources */,
+				805327D31A13166E009F1612 /* archer.mp3 in Resources */,
 				198918451A0C464C007AD507 /* leftButton.png in Resources */,
 				198918641A0C483A007AD507 /* Grid10.png in Resources */,
+				805327D51A13166E009F1612 /* walk.mp3 in Resources */,
 				1904E2021A0798F1002ABC66 /* InfoPlist.strings in Resources */,
+				805327D01A13166E009F1612 /* mage.mp3 in Resources */,
+				805327D61A13166E009F1612 /* block.mp3 in Resources */,
 				1989186A1A0C4843007AD507 /* warrior.png in Resources */,
 				198918661A0C483A007AD507 /* mageStory.png in Resources */,
 				1989185C1A0C483A007AD507 /* Grid2.png in Resources */,
