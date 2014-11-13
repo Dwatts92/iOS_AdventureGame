@@ -86,6 +86,7 @@
     [self saveItems];
 
     dest.mainChar = self.chosenChar;
+    dest.globalStats = self.globalStats;
 }
 
 
@@ -134,6 +135,7 @@
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
     [archiver encodeObject:persistantChar forKey:@"dataChar"];   //archives it for persistant storage
+    [archiver encodeObject:self.globalStats forKey:@"globalStats"];
     
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];

@@ -6,8 +6,10 @@
 //
 
 #import "ChooseClass.h"
+#import "FunStats.h"
 
 @interface ChooseClass ()
+
 
 @property NSString *type;
 
@@ -95,6 +97,7 @@
         
         self.character = [[LocalChar alloc] initWithName:self.characterName.text initWithType:self.type]; //creats an object of the character, this is passed through almost every segue in the applcation.
         self.character.gridProgress = 0;        //starting gridprogress at 0
+        self.globalStats.newChars++;
     }
     
 }
@@ -119,6 +122,7 @@
      NSLog(@"Name: %@",self.character.charName);
      NSLog(@"Type: %@",self.character.charType);
      dest.chosenChar = self.character;
+     dest.globalStats=self.globalStats;
  // Pass the selected object to the new view controller.
  }
 
