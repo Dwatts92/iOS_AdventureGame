@@ -9,10 +9,9 @@
 #import "Character.h"
 #import "LocalChar.h"
 #import "IntroStory.h"
-#import "FunStats.h"
 
 @interface ChooseClass : UIViewController <UITextFieldDelegate>
-@property FunStats *globalStats;
+
 
 
 @end

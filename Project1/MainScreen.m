@@ -123,7 +123,6 @@
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
     [archiver encodeObject:persistantChar forKey:@"dataChar"];   //stores Character to file
-    [archiver encodeObject:self.globalStats forKey:@"globalStats"];
     
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
@@ -141,10 +140,7 @@
         
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        
-        self.globalStats = [unarchiver decodeObjectForKey:@"globalStats"];
         persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
-        
         [unarchiver finishDecoding];
         
               //  NSLog(@"Contents: %@",[persistantChar description]);  //shown to make sure its loading correctly
@@ -171,7 +167,6 @@
     Status *dest = segue.destinationViewController;
     
     dest.tableChar = self.mainChar;         //sends character stats to status screen for usage
-    dest.globalStats=self.globalStats;
 }
 
 
@@ -207,27 +202,17 @@
 
         self.mainChar.gridProgress = 1; //progress increases
         
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
         //repeat for other methods.
     }
     else if (self.mainChar.gridProgress == 3) //SQ 2
     {
         self.mainText.text= @"The troll looks up and speaks: \n\n'Before I let you pass, I will ask you question. What is the name of the evil king? Is it A: Bazul or B: Gannon? \n\n Click the GREEN button to answer A, RED button to answer B.";
         self.mainChar.gridProgress = 4;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress ==8)
     {
         self.mainText.text=@"Tired from your journey, you fall atop your bed and quickly drift off to sleep. 8 hours of sleeping like a baby later, you awake and continue to the Mystic Meadows. \n\n Hit RIGHT to move East and continue.";
         self.mainChar.gridProgress = 9;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
           [self saveItems]; // scenario/square finished, saves before hitting right
 
     }
@@ -235,18 +220,11 @@
     {
         self.mainText.text=@"'I would like to challenge you to a race!' Goph says. 'If you've got high enough agility...you may just beat me.'\n\nPress GREEN button to challenge Goph.";
         self.mainChar.gridProgress = 11;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 15)
     {
         self.mainText.text=@"You take the wizard up on his offer.'Normally it would cost you, but you and me share a common enemy. Bazul murdered my family.' Stoic and silent after that, the wizard led you to a shoddy looking boat right by the river. It was no ordinary old boat though, it was embued with magic strong enough to break the spell. You got on the boat with the wizard and sailed East towards Bazul. \n\nPress RIGHT to continue, you're almost there.";
         self.mainChar.gridProgress = 16;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
           [self saveItems]; // scenario/square finished, saves before hitting right
     }
     
@@ -273,9 +251,6 @@
         self.mainChar.agility += 5;     //stats increase from item
         self.mainChar.gridProgress = 9;
         self.mainChar.itemCount = 3;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
         
         [self saveItems];  // scenario/square finished, saves before hitting right
     }
@@ -306,9 +281,6 @@
         self.mainText.text = @"You come to a bridge guarded by a slimey troll. His face is stoic and body unmoving. \n\nLike before, hit INVESTIGATE to check him out, or LEFT or RIGHT to move around and inspect the area.";
         self.mainChar.gridProgress = 3;
         
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
     }
     else if (self.mainChar.gridProgress == 3)
     {
@@ -320,9 +292,6 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid3.png"];
         self.mainText.text= @"After going across the bridge, you come across two bandits guarding gates. Before you have a chance to think, they engage you in combat.\n\nCombat has begun. Attack with the GREEN button, or block and heal with the RED button.\n\nPro tip: you can heal above your base health with the RED button just for kicks. Health resets to base health at the end of combat.";
         self.mainChar.gridProgress = 6;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     
     else if (self.mainChar.gridProgress == 7)
@@ -330,9 +299,6 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid4.png"];
         self.mainText.text= @"It turns out the bandits were ambushing Delphim city goers at the city gates. For defeating them, the city mayor offers you hospitality. Giving you little time to explore the city, he forces you into your free Inn room where you can get a much needed rest. \n\nUse RIGHT and LEFT to move and explore your room, INVESTIGATE when you wish to sleep and move on to the next day.";
         self.mainChar.gridProgress = 8;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 8)
     {
@@ -343,9 +309,6 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid5.png"];
        self.mainText.text = @"You start walking through the Mystic Meadows. Not far in front of you, you spot Goph, the fabled spirit of the Meadows. He playfully waves you over. Hit INVESTIGATE to speak with Goph, or RIGHT or LEFT to move and explore the Meadows.";
         self.mainChar.gridProgress = 10;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 10)
     {
@@ -356,18 +319,12 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid6.png"];
         self.mainText.text = @"As you continue East through the Meadows...a Dark Hooded Figure Approaches.'I am King Bazul's most adept servant. For coming on this quest...you shall pay! You quickly ready for combat. Press GREEN to attack and RED to heal and block.";
         self.mainChar.gridProgress = 13;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress ==14)
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid7.png"];
         self.mainText.text = @"You make your way down to Villandra. Mages have gathered here after hearing your good deeds across Yondolore. Bazul's lair is not much further to the West now, but lies across an enchanted river. The river is under a spell so that none may use it. If only an experienced Mage could break the spell, you could cross.\n\n'I can break the spell. Says a striking, powerful Wizard behind you, will telepathic abilities. Hit INVESTIGATE to take the wizard up on his offer, or RIGHT or LEFT to explore Villandra more.";
         self.mainChar.gridProgress = 15;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 15)
     {
@@ -378,37 +335,24 @@
         self.gridPicture.image = [UIImage imageNamed:@"Grid8.png"];
         self.mainText.text=@"You sail along the river with the powerful wizard, who is completely covered in a thick, blue, presumably magic cloak. 'Before you take on Bazul, I'll also offer you some power. I will only give you a lot if I can tell you are wise beyond your years. Let me bring my hand to your forehead to see your knowledge.'\n\nSomething feels off about it, but why not. Press GREEN to allow the Wizard to touch your forehead.";
         self.mainChar.gridProgress = 17;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 18)
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid9.png"];
         self.mainText.text=@"King Bazul, now 3 demonized copies of himself, laughs. 'JUST TRY AND TAKE THE CROWN FROM ME!'. The final batlle begins, you know what to do. Press GREEN button to attack, RED to block and heal.";
         self.mainChar.gridProgress = 19;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
     }
     else if (self.mainChar.gridProgress == 20)
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid10.png"];
         self.mainText.text=@"You pick up the crown. Use it for good? No, not this wretched artifact. No good will come of this. You throw the crown to the bottom of the nameless river, and slowly row your way back to civilization. You smile as you hope to see the fear wiped from Yondolorian faces. Your quest is over, your purpose furfilled.\n\nCONGRATULATIONS! YOU HAVE BEATEN THE GAME!.\n\nThank you for playing!";
         self.mainChar.gridProgress = 21;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
         [self saveItems];
     }
     else if (self.mainChar.gridProgress == 21)  //finished game
     {
         self.gridPicture.image = [UIImage imageNamed:@"Grid10.png"];
         self.mainText.text=@"You've completed the game! Exit out and start a New Game if wish to play again.";
-        
-        if(self.globalStats.furthestProgress<100)
-            self.globalStats.furthestProgress = 100.0;
     }
 
     
@@ -428,9 +372,6 @@
         
         self.mainChar.gridProgress = 2;
         
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
         [self saveItems]; // scenario/square finished, saves before hitting right
         
        // self.buttonProg = 2;
@@ -440,9 +381,6 @@
         self.mainText.text = @"Correct! Have a delicious stat bonus, hero. Carry on.\n\nYou gain +5 to Intellect!\n\nPress RIGHT to push on.";
         self.mainChar.gridProgress = 5;
         self.mainChar.intellect +=5;
-        
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
         
         [self saveItems];
        // self.buttonProg =5;
@@ -460,10 +398,6 @@
         
         attack = self.mainChar.strength + r;    //add randomizer and your strength for calculation
         
-        self.globalStats.hits++;
-        self.globalStats.damageDone=self.globalStats.damageDone+attack;
-        self.globalStats.damageTaken=self.globalStats.damageTaken+enemy_attack;
-        
         int newHealth = self.tempHealth - enemy_attack;  //health deducted for you
         self.enemy1_health = self.enemy1_health - attack;  //health deducted for enemy
         
@@ -476,7 +410,6 @@
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20; //health increase
             self.enemy1_health = 70; //reset enemy health. had these lower for grading so if they died they could quickly get through the combat again. bumped them up again for fun. (combat is still easy as pie though)
-            self.globalStats.deaths++;
         }
         else if (self.enemy1_health <= 0) //IF ENEMY DIES
         {
@@ -487,10 +420,6 @@
             self.mainChar.gridProgress = 7;  //grid Progress increases so combat ends
             self.tempHealth = self.mainChar.health;
             self.enemy1_health = 70;        //reset health values
-            
-            self.globalStats.kills++;
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
             
             [self saveItems]; //save progress before hitting right
             
@@ -507,10 +436,6 @@
             self.mainChar.intellect +=3;
             self.mainChar.gridProgress = 12;
             
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-            
-            
             [self saveItems];
         }
         else
@@ -518,9 +443,6 @@
             self.mainText.text = @"You accept Goph's challenge...and he easily passes you by. 'Nice try', he says. 'Here's some pity health.'\n\nYou gain +4 Health.\n\nBefore you continue on your quest, Goph warns you of an evil ahead in the Meadows. \n\nPress RIGHT to continue through the Meadows.";
             self.mainChar.health += 4;
             self.mainChar.gridProgress = 12;
-            
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
             
             [self saveItems];
         }
@@ -537,10 +459,6 @@
         int newHealth = self.tempHealth - enemy_attack;
         self.enemy2_health = self.enemy2_health - attack;
         
-        self.globalStats.hits++;
-        self.globalStats.damageDone=self.globalStats.damageDone+attack;
-        self.globalStats.damageTaken=self.globalStats.damageTaken+enemy_attack;
-        
         if (self.tempHealth > 0 && self.enemy2_health > 0) {  //ATTACK CODE HERE
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou attack first for %d damage.\n\nEnemy swings back for %d damage.\n\nYour resulting health is %d\n\nClick GREEN to attack again, or RED to block and heal.",self.tempHealth,attack,enemy_attack, newHealth];
             self.tempHealth = newHealth;
@@ -550,8 +468,6 @@
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
             self.enemy2_health = 120;
-            
-            self.globalStats.deaths++;
         }
         else if (self.enemy2_health <= 0)
         {
@@ -566,10 +482,6 @@
             self.tempHealth = self.mainChar.health;
             self.enemy2_health = 120;
             
-            self.globalStats.kills++;
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-            
             [self saveItems];
         }
         
@@ -581,10 +493,6 @@
         if (self.mainChar.intellect > 17) {
             self.mainText.text = @"The wizard puts his hand to your forehead, but your high intellect detects a magical attack incoming. You strike at wizard dealing an early 10 damage to him. The wizard dematerializes into 3, devilish copies of himself, one of which is wearing the Yondolorian crown. Before you lies King Bazul, terror of Yondolore.\n\nPress RIGHT and begin the final battle.";
             self.mainChar.gridProgress = 18;
-            
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-            
             self.enemy3_health -= 10;
             
             [self saveItems];
@@ -594,9 +502,6 @@
             self.mainText.text = @"The wizard puts his hand to your forehead, and shoots a magical attack to your forehead. Perhaps with higher intellect you could've seen it coming, but luckily it was a glancing blow and you only lose 5 health. The wizard dematerializes into 3, devilish copies of himself, one of which is wearing the Yondolorian crown. Before you lies King Bazul, terror of Yondolore.\n\nPress RIGHT and begin the final battle.";
             self.mainChar.health -= 5;
             self.mainChar.gridProgress = 18;
-            
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
             
             [self saveItems];
         }
@@ -616,10 +521,6 @@
         int newHealth = self.tempHealth - enemy_attack;
         self.enemy3_health = self.enemy3_health - attack;
         
-        self.globalStats.hits++;
-        self.globalStats.damageDone=self.globalStats.damageDone+attack;
-        self.globalStats.damageTaken=self.globalStats.damageTaken+enemy_attack;
-        
         if (self.tempHealth > 0 && self.enemy3_health > 0) {  //ATTACK CODE HERE
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou attack first for %d damage.\n\nEnemy swings back for %d damage.\n\nYour resulting health is %d\n\nClick GREEN to attack again, or RED to block and heal.",self.tempHealth,attack,enemy_attack, newHealth];
             self.tempHealth = newHealth;
@@ -629,8 +530,6 @@
             self.mainText.text = @"You took fatal damage from the enemy on the last attack. You have died! Click GREEN button to attack and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
             self.enemy3_health = 180;
-        
-            self.globalStats.deaths++;
         }
         else if (self.enemy3_health <= 0)
         {
@@ -638,10 +537,6 @@
             self.mainChar.gridProgress = 20;
             self.tempHealth = self.mainChar.health;
             self.enemy3_health = 180;
-            
-            self.globalStats.kills++;
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
         }
         
     } //end FINAL BATTLE
@@ -663,9 +558,6 @@
         self.mainChar.intellect -=3;
         self.mainChar.gridProgress = 5;
         
-        if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-            self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-        
         [self saveItems];
        // self.buttonProg =5;
     }
@@ -679,8 +571,6 @@
     else if (self.mainChar.gridProgress == 6) {
         int healHealth = arc4random_uniform(15);     //heal small random amount
         int newHealth = self.tempHealth + healHealth;  //get new health with heal bonus
-        
-        self.globalStats.blocks++;
         
         if (self.tempHealth > 0 && self.enemy1_health > 0) {   //if you or enemy are alive, continue combat
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou block the enemy's strike and heal up %d health.\n\nYour resulting health is %d\n\nClick GREEN to attack, or RED to block and heal.",self.tempHealth,healHealth,newHealth];
@@ -703,10 +593,6 @@
             self.tempHealth = self.mainChar.health;  //reset health
             self.enemy1_health = 70;
             
-            self.globalStats.kills++;
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-            
             [self saveItems]; //save before hitting right
         }
         
@@ -723,8 +609,6 @@
         int healHealth = arc4random_uniform(15);
         int newHealth = self.tempHealth + healHealth;
         
-        self.globalStats.blocks++;
-        
         if (self.tempHealth > 0 && self.enemy2_health > 0) {
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou block the enemy's strike and heal up %d health.\n\nYour resulting health is %d\n\nClick GREEN to attack, or RED to block and heal.",self.tempHealth,healHealth,newHealth];
             self.tempHealth = newHealth;
@@ -734,8 +618,6 @@
             self.mainText.text = @"You tried to block, but your wounds from the previous attack were too much to bear. You have died! Click GREEN button to attack or RED to block and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
             self.enemy2_health = 120;
-            
-            self.globalStats.deaths++;
         }
         else if (self.enemy2_health <= 0)
         {
@@ -749,13 +631,8 @@
             
             self.mainChar.gridProgress = 14;
             
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
-            
             self.tempHealth = self.mainChar.health;
             self.enemy2_health = 120;
-            
-            self.globalStats.kills++;
             
             [self saveItems];
 
@@ -774,8 +651,6 @@
         int healHealth = arc4random_uniform(20);
         int newHealth = self.tempHealth + healHealth;
         
-        self.globalStats.blocks++;
-        
         if (self.tempHealth > 0 && self.enemy3_health > 0) {
             self.mainText.text = [NSString stringWithFormat: @"Your Current Health: %d\n\nYou block the enemy's strike and heal up %d health.\n\nYour resulting health is %d\n\nClick GREEN to attack, or RED to block and heal.",self.tempHealth,healHealth,newHealth];
             self.tempHealth = newHealth;
@@ -785,8 +660,6 @@
             self.mainText.text = @"You tried to block, but your wounds from the previous attack were too much to bear. You have died! Click GREEN button to attack or RED to block and try again. You will be reborn with extra health for replaying the battle.";
             self.tempHealth = self.mainChar.health + 20;
             self.enemy3_health = 180;
-            
-            self.globalStats.deaths++;
         }
         else if (self.enemy3_health <= 0)
         {
@@ -794,10 +667,6 @@
             self.mainChar.gridProgress = 20;
             self.tempHealth = self.mainChar.health;
             self.enemy3_health = 180;
-            
-            self.globalStats.kills++;
-            if(self.globalStats.furthestProgress<100*self.mainChar.gridProgress/21)
-                self.globalStats.furthestProgress = 100*self.mainChar.gridProgress/21;
             
         }
         

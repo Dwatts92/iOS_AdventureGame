@@ -10,8 +10,6 @@
 #import "LocalChar.h"
 #import "MainScreen.h"
 #import "IntroStory.h"
-#import "FunStats.h"
-#import "ChooseClass.h"
 
 @interface Project1ViewController : UIViewController
 

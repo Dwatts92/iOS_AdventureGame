@@ -10,10 +10,9 @@
 #import "LocalChar.h"
 #import "ChooseClass.h"
 #import "MainScreen.h"
-#import "FunStats.h"
 
 @interface IntroStory : UIViewController
-@property FunStats *globalStats;
+
 @property LocalChar* chosenChar;        //get local char from segue
 
 @end
