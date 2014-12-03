@@ -104,6 +104,7 @@
         //if user clicks on stats, go to stats screen, transfer character stats over there.
         Stats *dest2 = segue.destinationViewController;
         dest2.statsChar = self.tableChar;
+        dest2.globalStats=self.globalStats;
     }
 }
 

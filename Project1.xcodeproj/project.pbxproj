@@ -51,6 +51,8 @@
 		1989186A1A0C4843007AD507 /* warrior.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918681A0C4843007AD507 /* warrior.png */; };
 		1989186B1A0C4843007AD507 /* warStory.png in Resources */ = {isa = PBXBuildFile; fileRef = 198918691A0C4843007AD507 /* warStory.png */; };
 		1989186D1A0CA6B3007AD507 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1989186C1A0CA6B3007AD507 /* About.txt */; };
+		6005D8901A14336300875D4F /* FunStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 6005D88F1A14336300875D4F /* FunStats.m */; };
+		6005D8931A14425600875D4F /* FunStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6005D8921A14425600875D4F /* FunStatsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,10 @@
 		198918681A0C4843007AD507 /* warrior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warrior.png; sourceTree = "<group>"; };
 		198918691A0C4843007AD507 /* warStory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warStory.png; sourceTree = "<group>"; };
 		1989186C1A0CA6B3007AD507 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
+		6005D88E1A14336300875D4F /* FunStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunStats.h; sourceTree = "<group>"; };
+		6005D88F1A14336300875D4F /* FunStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunStats.m; sourceTree = "<group>"; };
+		6005D8911A14425600875D4F /* FunStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunStatsViewController.h; sourceTree = "<group>"; };
+		6005D8921A14425600875D4F /* FunStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunStatsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,12 +191,16 @@
 				1904E2061A0798F1002ABC66 /* Project1AppDelegate.h */,
 				1904E2071A0798F1002ABC66 /* Project1AppDelegate.m */,
 				1904E2091A0798F1002ABC66 /* Main.storyboard */,
+				6005D8911A14425600875D4F /* FunStatsViewController.h */,
+				6005D8921A14425600875D4F /* FunStatsViewController.m */,
 				196133871A0B3EE400664FC5 /* Stats.h */,
 				196133881A0B3EE400664FC5 /* Stats.m */,
 				1961338A1A0B3F0200664FC5 /* Items.h */,
 				1961338B1A0B3F0200664FC5 /* Items.m */,
 				1904E2351A07B69F002ABC66 /* MainScreen.h */,
 				1904E2361A07B69F002ABC66 /* MainScreen.m */,
+				6005D88E1A14336300875D4F /* FunStats.h */,
+				6005D88F1A14336300875D4F /* FunStats.m */,
 				1904E2321A07B33C002ABC66 /* IntroStory.h */,
 				196133841A0B37AA00664FC5 /* Status.h */,
 				196133851A0B37AA00664FC5 /* Status.m */,
@@ -387,10 +397,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1961338C1A0B3F0200664FC5 /* Items.m in Sources */,
+				6005D8901A14336300875D4F /* FunStats.m in Sources */,
 				1904E2691A084070002ABC66 /* LocalChar.m in Sources */,
 				1904E2341A07B33C002ABC66 /* IntroStory.m in Sources */,
 				1904E2081A0798F1002ABC66 /* Project1AppDelegate.m in Sources */,
 				1904E2311A079FF9002ABC66 /* Character.m in Sources */,
+				6005D8931A14425600875D4F /* FunStatsViewController.m in Sources */,
 				1904E2041A0798F1002ABC66 /* main.m in Sources */,
 				196133891A0B3EE400664FC5 /* Stats.m in Sources */,
 				1904E20E1A0798F1002ABC66 /* Project1ViewController.m in Sources */,

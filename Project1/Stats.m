@@ -62,5 +62,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"viewGlobalStats"]){
+        FunStatsViewController *dest = segue.destinationViewController;
+        dest.globalStats=self.globalStats;
+    }
+}
+
 
 @end

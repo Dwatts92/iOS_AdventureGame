@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cont;        //continue button. only appears if there is character data in storage.
 
 @property LocalChar *loadChar;      //new LocalChar just for quick load to make continue button appear
-
+@property FunStats *globalStats;  //stats object to be intialized in the case of no data
 
 @end
 
@@ -35,6 +35,7 @@
     
     if ([self.loadChar.charName  isEqual: @"NOLOAD"] || [self.loadChar.charType  isEqual: @"NOTYPE"]) {
         self.cont.hidden = YES;
+        self.globalStats=[[FunStats alloc] init];
     }
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -86,6 +87,7 @@
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         persistantChar = [unarchiver decodeObjectForKey:@"dataChar"];
+        self.globalStats = [unarchiver decodeObjectForKey:@"globalStats"];
         [unarchiver finishDecoding];    //get NSCoding Character from storage
         
         NSLog(@"Contents: %@",[persistantChar description]);
@@ -109,6 +111,11 @@
         
         MainScreen *dest = segue.destinationViewController;
         dest.mainChar = self.loadChar;
+        dest.globalStats=self.globalStats;
+    }
+    else{//else segue is new game so pass global stats pointer
+        ChooseClass *dest=segue.destinationViewController;
+        dest.globalStats=self.globalStats;
     }
 }
 
