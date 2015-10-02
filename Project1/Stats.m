@@ -14,8 +14,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *strength;
 @property (weak, nonatomic) IBOutlet UILabel *agility;
 @property (weak, nonatomic) IBOutlet UILabel *intellect;
-@property (weak, nonatomic) IBOutlet UILabel *progress;
+
 @property (weak, nonatomic) IBOutlet UIImageView *classImg;     //image on view
+@property (weak, nonatomic) IBOutlet UILabel *level;
 
 @end
 
@@ -42,17 +43,26 @@
         self.classImg.image = [UIImage imageNamed:@"mage.png"];
     }
     
-    double percent = 100 * self.statsChar.gridProgress/21;      //calculates game progress as a percent.
-    
+   // double percent = 100 * self.statsChar.gridProgress/21;      //calculates game progress as a percent.
+
     [super viewDidLoad];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"light brown.jpg"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
     // Do any additional setup after loading the view.
      self.Name.text=self.statsChar.charName;
     self.Class.text=self.statsChar.charType;
+    self.level.text=[NSString stringWithFormat:@"%d", self.statsChar.lvl];
     self.health.text=[NSString stringWithFormat:@"%d", self.statsChar.health];      //puts stats in to labels
     self.strength.text=[NSString stringWithFormat:@"%d", self.statsChar.strength];
     self.agility.text=[NSString stringWithFormat:@"%d", self.statsChar.agility];
     self.intellect.text=[NSString stringWithFormat:@"%d", self.statsChar.intellect];
-    self.progress.text=[NSString stringWithFormat:@"%.02f", percent];
+    
     
 }
 

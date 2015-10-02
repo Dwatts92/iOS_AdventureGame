@@ -10,6 +10,7 @@
 #import "LocalChar.h"
 #import "Items.h"
 #import "Stats.h"
+#import "gameStatsViewController.h"
 
 @interface Status : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.choices = [NSArray arrayWithObjects: @"Items",@"Character Stats", nil];  //set cell titles
+    self.choices = [NSArray arrayWithObjects: @"Items",@"Character Stats",@"Game Stats",@"Exit", nil];  //set cell titles
       [self.navigationController setNavigationBarHidden:NO animated:YES];  //re-instate navigation bar for use of back button in this screen, as well as items and stats.
     
 }
@@ -48,7 +48,7 @@
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return [self.choices count];        //rows = array, 2 titles
+    return [self.choices count];        //rows = array, 4 titles
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -75,13 +75,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"CELL CLICKED ON:%ld",(long)indexPath.row);
     if (indexPath.row == 0) //stats up segues for each cell depending on what you click.
     {
         [self performSegueWithIdentifier:@"itemSegue" sender:self];
     }
-    else
+    else if(indexPath.row == 1)
     {
         [self performSegueWithIdentifier:@"statSegue" sender:self];
+    }
+    else if(indexPath.row == 2)
+    {
+        [self performSegueWithIdentifier:@"gameStats" sender:self];
+    }
+    else if(indexPath.row == 3)
+    {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self performSegueWithIdentifier:@"titleSegue" sender:self];
     }
 }
 
@@ -105,7 +115,17 @@
         Stats *dest2 = segue.destinationViewController;
         dest2.statsChar = self.tableChar;
     }
+    
+    else if ([segue.identifier isEqualToString:@"gameStats"]) {
+
+        gameStatsViewController *dest3 = segue.destinationViewController;
+        dest3.gameChar = self.tableChar;
+    }
+    else {
+
+    }
 }
+
 
 
 @end

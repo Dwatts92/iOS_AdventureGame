@@ -35,6 +35,13 @@
 {
     [super viewDidLoad];        //there are 5 possible item combinations you can get...
     
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"page2.jpg"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
     if (self.itemsChar.itemCount ==1) {                 //character got item 1, Necklace of Valor
         self.item1.text = @"Necklace of Valor";
         self.desc1.text = @"+3 to Agility, Strength and Intellect. +10 to Health.";

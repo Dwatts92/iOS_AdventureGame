@@ -17,6 +17,11 @@
 - (IBAction)mage:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *error;    //error text that gets displayed on view
 
+@property (weak, nonatomic) IBOutlet UILabel *warDisplay;
+@property (weak, nonatomic) IBOutlet UILabel *archDisplay;
+@property (weak, nonatomic) IBOutlet UILabel *mageDisplay;
+
+
 
 - (IBAction)beginButton:(id)sender;     //button to begin game with selected char
 
@@ -25,6 +30,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *characterName;    //name input to enter for char
 @property AVAudioPlayer *warrior, *mage, *archer, *begin;
+
+@property BOOL pcheck;
 
 @end
 
@@ -45,6 +52,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"deep_brown.jpg"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     
     NSString *path = @"";
     NSURL *soundUrl;
@@ -92,18 +106,27 @@
     
     self.type = @"Warrior";
     [self.warrior play];
+    self.warDisplay.textColor = [UIColor yellowColor];
+    self.archDisplay.textColor = [UIColor whiteColor];
+    self.mageDisplay.textColor = [UIColor whiteColor];
 }
 
 - (IBAction)archer:(id)sender {
     
     self.type = @"Archer";
     [self.archer play];
+    self.archDisplay.textColor = [UIColor yellowColor];
+    self.warDisplay.textColor = [UIColor whiteColor];
+    self.mageDisplay.textColor = [UIColor whiteColor];
 }
 
 - (IBAction)mage:(id)sender {
     
     self.type = @"Mage";
     [self.mage play];
+    self.mageDisplay.textColor = [UIColor yellowColor];
+    self.archDisplay.textColor = [UIColor whiteColor];
+    self.warDisplay.textColor = [UIColor whiteColor];
     
 }
 
@@ -111,9 +134,10 @@
 
 - (IBAction)beginButton:(id)sender {        //shows error button and prevents segue if a char type or name weren't chosen.
     
+    [self checkNameParse];  //check if name is used
     if ([self shouldPerformSegueWithIdentifier:@"toMain" sender:(id)sender] == NO)
     {
-        self.error.text = @"Please enter a name and pick a character.";
+        self.error.text = @"Please enter a unique name and pick a character.";
     }
     else{
         
@@ -126,7 +150,7 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender   //method for if segue should be performed or not.
 {
-    if ([self.characterName.text  isEqual: @"" ] || self.type==NULL)
+    if ([self.characterName.text  isEqual: @"" ] || self.type==NULL ||self.pcheck == NO)
     {
         return NO;
     }
@@ -145,6 +169,23 @@
     NSLog(@"Type: %@",self.character.charType);
     dest.chosenChar = self.character;
     // Pass the selected object to the new view controller.
+}
+
+-(void)checkNameParse
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Character"];
+    [query whereKey:@"charName" equalTo:self.characterName.text];
+    PFObject *parseChar = [query getFirstObject];
+        if (!parseChar) {
+            NSLog(@"The getFirstObject request failed.");
+            self.pcheck = YES;
+        } else {
+            // The find succeeded.
+            NSLog(@"Duplicate name.");
+            self.pcheck = NO;
+            
+        }
+    
 }
 
 @end

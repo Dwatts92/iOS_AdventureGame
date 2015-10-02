@@ -10,6 +10,8 @@
 #import "LocalChar.h"
 #import "MainScreen.h"
 #import "IntroStory.h"
+#import <Parse/Parse.h>
+#import "CharListViewController.h"
 
 @interface Project1ViewController : UIViewController
 

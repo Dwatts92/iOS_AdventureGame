@@ -17,6 +17,16 @@
 @property int agility;              //agility value
 @property int intellect;            //intellect value
 @property int itemCount;            //monitors progress of items retrived in game, is basically a seed. There are 4 items but 5 different seeds, check out items.m to see how this works.
+@property int exp;
+@property int lvl;
+@property int rank;
+
+@property int battles;
+@property int deaths;
+@property int blocks;
+@property int attacks;
+
+
 
 -(instancetype)initWithName:(NSString*)charName initWithType:(NSString*)charType;   //initializes with name and character type
 

@@ -33,13 +33,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"darkbrowncurls.jpg"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [[UIImage imageNamed:@"deep_brown.jpg"] drawInRect:self.view.bounds];
+    UIImage *image2 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    self.introText.backgroundColor = [UIColor colorWithPatternImage:image2];
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
 
     self.typeTest.text = self.chosenChar.charType;    //shows name and character type at bottom of screen
     self.nameTest.text = self.chosenChar.charName;
     
     //each of these following if/if else statements take the type and name of the character, and based on the type choose a different picture to appear up top. The picture is a image related to the backstory of each character, which also depends on what char you pick. Your character name is used in the backstory. Different stats are set for each character; Warrior has 5 more strength, Archer has 5 more agility, and Mage 5 more intellect.
 
-    
+    self.introText.layer.cornerRadius = 1;
     if ([self.chosenChar.charType isEqualToString:@"Warrior"]) {
         self.introImage.image = [UIImage imageNamed:@"warStory.png"];
         
@@ -48,6 +63,7 @@
         self.chosenChar.strength = 15;
         self.chosenChar.agility = 10;
         self.chosenChar.intellect = 10;
+        self.chosenChar.lvl=1;
     }
     else if ([self.chosenChar.charType isEqualToString:@"Archer"])
     {
@@ -58,6 +74,7 @@
         self.chosenChar.strength = 10;
         self.chosenChar.agility = 15;
         self.chosenChar.intellect = 10;
+        self.chosenChar.lvl=1;
     }
     else
     {
@@ -68,6 +85,7 @@
         self.chosenChar.strength = 10;
         self.chosenChar.agility = 10;
         self.chosenChar.intellect = 15;
+        self.chosenChar.lvl=1;
     }
     // Do any additional setup after loading the view.
 }
@@ -81,11 +99,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender    //save Character, sends local character to next screen.
 {
-    MainScreen *dest = segue.destinationViewController;
+    SetStats *dest = segue.destinationViewController;
     
-    [self saveItems];
+    //[self saveItems]; ADD BACK IN FOR LOCAL STORAGE
+    
+    [self createNewParse];
 
-    dest.mainChar = self.chosenChar;
+    dest.statChar = self.chosenChar;
 }
 
 
@@ -116,6 +136,7 @@
 - (void)saveItems
 {
     
+    
     //create a generic data storage object
     
     Character *persistantChar = [[Character alloc] init];   //allocates data for NSCoding object, Character
@@ -138,6 +159,29 @@
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
     
+}
+
+-(void)createNewParse
+{
+    PFObject *Character = [PFObject objectWithClassName:@"Character"];   //storing in parse
+    Character[@"charName"] = self.chosenChar.charName;
+    Character[@"charType"] = self.chosenChar.charType;
+    Character[@"gridProgress"] = @(self.chosenChar.gridProgress);
+    Character[@"health"] = @(self.chosenChar.health);
+    Character[@"strength"] = @(self.chosenChar.strength);
+    Character[@"agility"] = @(self.chosenChar.agility);
+    Character[@"intellect"] = @(self.chosenChar.intellect);
+    Character[@"itemCount"] = @(self.chosenChar.itemCount);
+
+    Character[@"exp"] = @(self.chosenChar.exp);
+    Character[@"lvl"] = @(self.chosenChar.lvl);
+    Character[@"rank"] = @(self.chosenChar.rank);
+    Character[@"battles"] = @(self.chosenChar.battles);
+    Character[@"deaths"] = @(self.chosenChar.deaths);
+    Character[@"blocks"] = @(self.chosenChar.blocks);
+    Character[@"attacks"] = @(self.chosenChar.attacks);
+    
+    [Character saveInBackground];
 }
 
 @end

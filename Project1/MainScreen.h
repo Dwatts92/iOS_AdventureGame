@@ -10,6 +10,7 @@
 #import "LocalChar.h"
 #import "IntroStory.h"
 #import "Status.h"
+#import <Parse/Parse.h>
 
 @interface MainScreen : UIViewController
 
